@@ -26,7 +26,11 @@ public class PirateGame implements Serializable {
     ////////////////////////////////
     public Player getWinner(Player[] pl) {
         Player winner = pl[0];
-
+        for (int i=0; i<pl.length; i++){
+            if (pl[i].getScore() >= winner.getScore()){
+                winner = pl[i];
+            }
+        }
         return winner;
     }
 
