@@ -169,5 +169,46 @@ class PirateGameTest {
         assertTrue(final_state);
     }
 
+    @Test
+    @DisplayName("test row 50")
+    void testRow50() {
+        //init
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("coin");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<1){
+                die[i] = "skull";
+            }
+            if (i>=1 && i<3){
+                die[i] = "parrots";
+            }
+            if (i>=3 && i<6){
+                die[i] = "sword";
+            }
+            if (i>=6){
+                die[i] = "coin";
+            }
+        }
+        String[] hold = {"0", "3", "4", "5", "6", "7"}; //select dice to hold
+        die = game.RerollWithHold(die, hold); //reroll 1st
+        //assign dice
+        die[1] = "coin";
+        die[2] = "coin";
+        hold = new String[]{"0", "1", "2", "6", "7"};
+        die = game.RerollWithHold(die, hold); //reroll 2rd
+        die[3] = "coin";
+        die[4] = "coin";
+        die[5] = "coin";
+        int final_score = game.scoreForKindsAndChest(die, p) + game.scoreForDC(die, p);
+        assertEquals(4800, final_score);
+    }
+
 
 }
