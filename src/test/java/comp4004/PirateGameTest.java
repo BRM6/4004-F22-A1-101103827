@@ -1,9 +1,6 @@
 package comp4004;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -1358,6 +1355,51 @@ class PirateGameTest {
         }
         boolean final_state = game.checkIfDie(die, p);
         assertTrue(final_state);
+    }
+
+    @Test
+    @DisplayName("test row 108")
+    void testRow108() {
+        scannerInput("1");
+        game = new PirateGame();
+        //init
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("2 skull");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<2){
+                die[i] = "skull";
+            }
+            if (i>=2 && i<5){
+                die[i] = "parrots";
+            }
+            if (i>=5 && i<8){
+                die[i] = "monkey";
+            }
+        }
+        String[] hold = {"0", "1", "5", "6", "7"}; //select dice to hold
+        die = game.RerollWithHold(die, hold); //reroll
+        //assign dice
+        die[2] = "skull";
+        die[3] = "skull";
+        die[4] = "sword";
+        hold = new String[]{"0", "1", "2", "3"}; //select dice to hold
+        die = game.RerollWithHold(die, hold); //reroll
+        //assign dice
+        die[4] = "skull";
+        die[5] = "skull";
+        die[6] = "skull";
+        die[7] = "sword";
+        int final_num_skull = game.rerollSkullLandAndCountNOSkull(die, p);
+        int final_deduct = final_num_skull * 100;
+        assertEquals(-900, final_deduct);
+        Assertions.assertEquals(0, p.getScore());
     }
 
 }
