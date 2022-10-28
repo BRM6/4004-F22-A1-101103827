@@ -293,6 +293,17 @@ public class PirateGame implements Serializable {
             p.setScore(p.getScore());
         }
     }
+    public void calculateScoreForARoundWithCapMonkey(Player p, String[] current){
+
+    }
+
+    public void scoreWhenCap(Player player, String[] r){
+
+    }
+
+    public void scoreForMonkeyB(Player player, String[] r){
+
+    }
 
 
 
