@@ -504,6 +504,48 @@ public class PirateGame implements Serializable {
         }
     }
 
+    public void startGame(){
+        players = clientConnection.receivePlayerInfo();
+        while(true){
+            int round = clientConnection.receiveRound();
+            int[] pl = clientConnection.receivedScore();
+            // if game ends
+            if (round == -1){
+                pl = clientConnection.receivedScore();
+                for (int i = 0; i < 3; i++) {
+                    players[i].setScore(pl[i]);
+                }
+                for (Player p : players) {
+                    if (p.getScore() >= 3000)
+                        System.out.println("Game over!!!\n" + p.getName() + " wins the game!");
+                }
+                break;
+            }
+
+            System.out.println("******************Round " + round + "********");
+            for (int i = 0; i < 3; i++){
+                //set final score for each player
+                players[i].setScore(pl[i]);
+            }
+
+            //checking
+            printPlayerScore(players);
+            drawForturnCard(player);
+            player.setHoldingDie(player.emptyHoldingDie()); //empty player holding die from previous round
+            clientConnection.sendScore(playARound(player)); //player play a round and then send player score to server
+            player.nextRound();
+        }
+    }
+
+    public void printPlayerScore(Player[] pls){
+        for (Player pl : pls) {
+            System.out.println("|----------------------------------------------------------------|");
+            System.out.println("| Player : " + pl.getName());
+            System.out.println("| Total Score : " + pl.getScore());
+            System.out.println("|----------------------------------------------------------------|");
+        }
+    }
+
     public int playARound(Player player){ //actual game loop with game logic
         //init some values
         int numOfSkull = 0;
@@ -738,6 +780,16 @@ public class PirateGame implements Serializable {
             }
             return 0;
         }
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
+        PirateGame pirateGame = new PirateGame();
+        System.out.println("ENTER PLAYER NAME: ");
+        String name = scanner.next();
+        pirateGame.setNewPlayer(new Player(name));
+        pirateGame.connectToClient();
+        pirateGame.startGame();
+        scanner.close();
     }
 }
