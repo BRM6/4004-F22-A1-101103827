@@ -35,6 +35,27 @@ public class PirateGame implements Serializable {
     }
 
     public boolean checkIfDie(String[] r, Player player){ //checking current roll if died, if died, return true; if not die return false
+        int count = 0;
+        //add fortune card skull
+        if (player.getFortuneCard() == "1 skull"){
+            count = 1;
+        }
+        if (player.getFortuneCard() == "2 skull"){
+            count = 2;
+        }
+
+        for (int i = 0; i<r.length; i++){
+            if (r[i] == "skull"){
+                count++;
+            }
+        }
+
+        if (count == 3){
+            return true;
+        }
+        if ( (player.getFortuneCard() == "2 sword" || player.getFortuneCard() == "3 sword" || player.getFortuneCard() == "4 sword") && count >= 3){
+            return true;
+        }
         return false;
     }
 
