@@ -50,4 +50,21 @@ class PirateGameUnitTest {
         Player winner = game.getWinner(playerList);
         Assertions.assertEquals("name3", winner.getName());
     }
+    @Test
+    @DisplayName("get winner test 2")
+    void getWinnerTest2() {
+        Player[] playerList = new Player[3];
+        Player p1 = new Player("name1");
+        p1.setScore(100);
+        playerList[0] = p1;
+        Player p2 = new Player("name2");
+        p2.setScore(200);
+        playerList[1] = p2;
+        Player p3 = new Player("name3");
+        p3.setScore(-300);
+        playerList[2] = p3;
+
+        Player winner = game.getWinner(playerList);
+        Assertions.assertEquals("name2", winner.getName());
+    }
 }
