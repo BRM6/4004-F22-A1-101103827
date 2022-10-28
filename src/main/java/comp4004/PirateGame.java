@@ -303,7 +303,11 @@ public class PirateGame implements Serializable {
     }
 
     public void scoreWhenCap(Player player, String[] r){
-
+        int score = 0;
+        score = scoreForKindsAndChest(r, player) +  scoreForDC(r, player);
+        player.setScore(player.getScore() + (score * 2));
+        System.out.println("Player card is Captain, current round score hsa been multiplied by 2");
+        System.out.println("Player final score for this round is: " + (score*2));
     }
 
     public void scoreForMonkeyB(Player player, String[] r){
