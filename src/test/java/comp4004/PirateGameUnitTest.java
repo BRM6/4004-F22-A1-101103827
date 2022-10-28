@@ -215,5 +215,38 @@ class PirateGameUnitTest {
         assertEquals(200, score);
     }
 
+    @Test
+    @DisplayName("sea battle test 1")
+    void seaBattleTest1() {
+        Player player = new Player("Di");
+        player.setFortuneCard("2 sword");
+        game.setNewPlayer(player);
+        String[] roll = {"sword", "sword", "parrots", "parrots", "parrots", "parrots", "skull", "skull"};
+        game.seaBattle(player, roll);
+        Assertions.assertEquals(500, player.getScore());
+    }
+
+    @Test
+    @DisplayName("sea battle test 2")
+    void seaBattleTest2() {
+        Player player = new Player("Di");
+        player.setFortuneCard("3 sword");
+        game.setNewPlayer(player);
+        String[] roll = {"sword", "sword", "parrots", "parrots", "parrots", "parrots", "skull", "skull"};
+        game.seaBattle(player, roll);
+        Assertions.assertEquals(0, player.getScore());
+    }
+
+    @Test
+    @DisplayName("sea battle test 3")
+    void seaBattleTest3() {
+        Player player = new Player("Di");
+        player.setFortuneCard("2 sword");
+        game.setNewPlayer(player);
+        String[] roll = {"sword", "sword", "parrots", "parrots", "skull", "skull", "skull", "skull"};
+        game.seaBattle(player, roll);
+        Assertions.assertEquals(0, player.getScore());
+    }
+
 
 }

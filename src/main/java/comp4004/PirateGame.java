@@ -221,6 +221,9 @@ public class PirateGame implements Serializable {
         }
 
         return scoreKind;
+    }
+
+    public void seaBattle(Player p, String[] current){
 
     }
 
