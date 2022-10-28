@@ -299,7 +299,6 @@ public class PirateGame implements Serializable {
         } else if (p.getFortuneCard() == "monkey business") {
             scoreForMonkeyB(p, current);
         }
-
     }
 
     public void scoreWhenCap(Player player, String[] r){
