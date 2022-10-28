@@ -1149,4 +1149,38 @@ class PirateGameTest {
         int final_score = p.getScore();
         assertEquals(600, final_score, "Player die in this round, now score with the dice in chest");
     }
+
+    //Full Chest tests
+    @Test
+    @DisplayName("test row 97")
+    void testRow97() {
+        PirateGame game = new PirateGame();
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("coin");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){                //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<3){
+                die[i] = "monkey";
+            }
+            if (i>=3 && i<6){
+                die[i] = "sword";
+            }
+            if (i == 6){
+                die[i] = "diamond";
+            }
+            if (i == 7){
+                die[i] = "parrot";
+            }
+        }
+        int final_score = game.scoreForKindsAndChest(die, p) + game.scoreForDC(die, p);
+        assertEquals(400, final_score);
+    }
+
+
 }
