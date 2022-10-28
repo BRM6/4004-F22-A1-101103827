@@ -1335,4 +1335,29 @@ class PirateGameTest {
         assertTrue(final_state);
     }
 
+    @Test
+    @DisplayName("test row 107")
+    void testRow107() {
+        //init
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("1 skull");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<2){
+                die[i] = "skull";
+            }
+            if (i>=2 && i<8){
+                die[i] = "sword";
+            }
+        }
+        boolean final_state = game.checkIfDie(die, p);
+        assertTrue(final_state);
+    }
+
 }
