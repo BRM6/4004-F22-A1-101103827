@@ -376,6 +376,32 @@ public class PirateGame implements Serializable {
 
     public String[] RerollWithChestHold(String[] current,String[] hold ,String[] chest){
         String[] buffer = new String[8];
+        int count = 0;
+
+        for (int i=0; i<chest.length; i++){ //add dice in chest in after_roll
+            if (current[Integer.parseInt(chest[i])] != null){
+                buffer[Integer.parseInt(chest[i])] = current[Integer.parseInt(chest[i])];
+            }
+        }
+        for (int i=0; i<hold.length; i++){ //add dice in hold in after_roll
+            if (buffer[i] != "skull"){
+                buffer[Integer.parseInt(hold[i])] = current[Integer.parseInt(hold[i])];
+            }
+        }
+        for (int i = 0; i<8; i++){ //count # of re-roll die
+            if (buffer[i] == null){
+                count++;
+            }
+        }
+        if (count >=2){
+            for (int i = 0; i<8; i++){ //re-roll
+                if (buffer[i] == null){
+                    buffer[i] = rollSingleDie();
+                }
+            }
+        }else{
+            return current;
+        }
 
         return buffer;
     }
