@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PirateGameTest {
     private ByteArrayOutputStream testOut;
@@ -61,6 +62,40 @@ class PirateGameTest {
         }
         int final_score = game.scoreForKindsAndChest(die, p) + game.scoreForDC(die, p);
         assertEquals(0, final_score);
+    }
+
+    @Test
+    @DisplayName("test row 46")
+    void testRow46() {
+        //init
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("coin");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<1){
+                die[i] = "skull";
+            }
+            if (i>=1 && i<5){
+                die[i] = "parrots";
+            }
+            if (i>=5){
+                die[i] = "sword";
+            }
+        }
+        String[] hold = {"1", "2", "3", "4"}; //select dice to hold
+        die = game.RerollWithHold(die, hold); //reroll
+        //assign dice
+        die[5] = "skull";
+        die[6] = "skull";
+        die[7] = "sword";
+        boolean final_state = game.checkIfDie(die, p);
+        assertTrue(final_state);
     }
 
 
