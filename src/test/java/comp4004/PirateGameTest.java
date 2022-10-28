@@ -584,6 +584,26 @@ class PirateGameTest {
         assertEquals(5400, final_score);
     }
 
+    @Test
+    @DisplayName("test row 65")
+    void testRow65() {
+        //init
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("diamond");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            die[i] = "coin";
+        }
+        int final_score = game.scoreForKindsAndChest(die, p) + game.scoreForDC(die, p);
+        assertEquals(5400, final_score);
+    }
+
 
 
 }
