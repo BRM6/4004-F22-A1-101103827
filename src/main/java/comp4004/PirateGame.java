@@ -327,7 +327,16 @@ public class PirateGame implements Serializable {
 
     public String[] reRollWithoutHold(String[] current){
         String[] buffer = new String[8];
-        
+        for (int i = 0; i<8; i++){
+            if (current[i] == "skull"){ //hold skull
+                buffer[i] = "skull";
+            }
+        }
+        for (int i = 0; i<8; i++){
+            if (buffer[i] == null){ //re-roll except for skull
+                buffer[i] = rollSingleDie();
+            }
+        }
         return buffer;
     }
 
