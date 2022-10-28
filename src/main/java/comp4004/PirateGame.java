@@ -96,7 +96,21 @@ public class PirateGame implements Serializable {
 
     public String[] useSorceress(String[] r, Player player){
         String[] buffer = Arrays.copyOf(r, 8);
-
+        //if skull exist will ask use if user want to use sorceress
+        if (player.getFortuneCard() == "sorceress"){
+            System.out.println("Enter number 1 to use sorceress, Enter number 0 to not use sorceress");
+            String ifSorceress = scanner.nextLine();
+            if (ifSorceress.matches("-?\\d+") && (Integer.parseInt(ifSorceress) == 1)){
+                for (int i=0; i<8; i++){
+                    if (r[i].equals("skull")){
+                        buffer[i] = rollSingleDie();// rerolled a skull
+                        player.setFortuneCard("not sorceress");//sorceress only can use once
+                        break;
+                    }
+                }
+                System.out.println("AFTER PLAYER USING SORCERESS NOW ROLL IS : " + Arrays.toString(buffer));
+            }
+        }
         return buffer;
     }
 
