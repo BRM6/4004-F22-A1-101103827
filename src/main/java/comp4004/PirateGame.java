@@ -475,6 +475,24 @@ public class PirateGame implements Serializable {
     }
 
     public boolean isSkullLand(String[] r){
+        int numOfSkull = 0;
+        if (player.getFortuneCard() == "1 skull"){
+            numOfSkull += 1;
+        }
+        if (player.getFortuneCard() == "2 skull"){
+            numOfSkull += 2;
+        }
+
+        for (int i=0; i<8; i++){
+            if(r[i] != null && r[i] == "skull"){
+                numOfSkull += 1;
+            }
+        }
+
+        if (numOfSkull > 3){
+            return true;
+        }
+
         return false;
     }
 
