@@ -377,4 +377,48 @@ class PirateGameUnitTest {
         String[] after_roll = game.RerollWithHold(before_roll, hold);
         assertTrue(before_roll == after_roll);
     }
+
+    @Test
+    @DisplayName("reroll with chest hold test 1 ")
+    void rerollWithChestHoldTest1() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {"2", "3"};
+        String[] chest = {"0", "1"};
+        String[] after_roll = game.RerollWithChestHold(before_roll, hold, chest);
+        assertEquals("uncoin", after_roll[0]);
+        assertEquals("undiamond", after_roll[1]);
+        assertEquals("uncoin", after_roll[2]);
+        assertEquals("uncoin", after_roll[3]);
+        assertTrue(before_roll != after_roll);
+    }
+
+    @Test
+    @DisplayName("reroll with chest hold test 2 ")
+    void rerollWithChestHoldTest2() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {"2", "3", "4", "5", "6"};
+        String[] chest = {"0", "1"};
+        String[] after_roll = game.RerollWithChestHold(before_roll, hold, chest);
+        assertTrue(before_roll == after_roll);
+    }
+
+    @Test
+    @DisplayName("reroll with chest hold test 3 ")
+    void rerollWithChestHoldTest3() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {"0", "1"};
+        String[] chest = {"2", "3", "4", "5", "6"};
+        String[] after_roll = game.RerollWithChestHold(before_roll, hold, chest);
+        assertTrue(before_roll == after_roll);
+    }
+
+    @Test
+    @DisplayName("reroll with chest hold test 4 ")
+    void rerollWithChestHoldTest4() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {};
+        String[] chest = {};
+        String[] after_roll = game.RerollWithChestHold(before_roll, hold, chest);
+        assertTrue(before_roll != after_roll);
+    }
 }

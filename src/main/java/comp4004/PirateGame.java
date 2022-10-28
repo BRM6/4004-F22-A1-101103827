@@ -374,7 +374,11 @@ public class PirateGame implements Serializable {
         return buffer;
     }
 
+    public String[] RerollWithChestHold(String[] current,String[] hold ,String[] chest){
+        String[] buffer = new String[8];
 
+        return buffer;
+    }
 
 
 
