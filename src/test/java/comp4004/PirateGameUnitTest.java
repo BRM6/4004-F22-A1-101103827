@@ -7,8 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PirateGameUnitTest {
     private ByteArrayOutputStream testOut;
@@ -105,6 +104,14 @@ class PirateGameUnitTest {
         String[] roll = {"skull", "skull", "skull", "parrots", "parrots", "parrots", "parrots", "parrots"};
         boolean isDie = game.checkIfDie(roll, player);
         assertTrue(isDie);
+    }
+
+    @Test
+    @DisplayName("roll single die test 1")
+    void rollSingleDieTest() {
+        String[] roll = {"uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        roll[0] = game.rollSingleDie();
+        assertNotEquals("uncoin", roll[0]);
     }
 
 
