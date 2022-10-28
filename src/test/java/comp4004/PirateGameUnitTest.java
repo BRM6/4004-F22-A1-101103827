@@ -447,4 +447,69 @@ class PirateGameUnitTest {
         game.scoreChest(player, player_die);
         Assertions.assertEquals(1100, player.getScore());
     }
+
+    @Test
+    @DisplayName("reroll skull land and count number of skull test 1")
+    void rerollSkullLandAndCountNOSkullTest1() {
+        scannerInput("1");
+        game = new PirateGame();
+        Player player = new Player("Di");
+        player.setFortuneCard("monkey business");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "skull", "skull", "skull", "skull", "skull"};
+        int numOfSkull = game.rerollSkullLandAndCountNOSkull(roll, player);
+        assertTrue(numOfSkull == -8);
+    }
+
+    @Test
+    @DisplayName("reroll skull land and count number of skull test 2")
+    void rerollSkullLandAndCountNOSkullTest2() {
+        scannerInput("1");
+        game = new PirateGame();
+        Player player = new Player("Di");
+        player.setFortuneCard("captain");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "skull", "skull", "skull", "skull", "skull"};
+        int numOfSkull = game.rerollSkullLandAndCountNOSkull(roll, player);
+        assertTrue(numOfSkull == -16);
+    }
+
+    @Test
+    @DisplayName("reroll skull land and count number of skull test 3")
+    void rerollSkullLandAndCountNOSkullTest3() {
+        scannerInput("1");
+        game = new PirateGame();
+        Player player = new Player("Di");
+        player.setFortuneCard("2 skull");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "skull", "skull", "skull", "skull", "skull"};
+        int numOfSkull = game.rerollSkullLandAndCountNOSkull(roll, player);
+        assertTrue(numOfSkull == -10);
+    }
+
+    @Test
+    @DisplayName("reroll skull land and count number of skull test 4")
+    void rerollSkullLandAndCountNOSkullTest4() {
+        scannerInput("1");
+        game = new PirateGame();
+        Player player = new Player("Di");
+        player.setFortuneCard("monkey business");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "skull", "skull", "skull", "skull", "coin"};
+        int numOfSkull = game.rerollSkullLandAndCountNOSkull(roll, player);
+        assertTrue(numOfSkull == -7);
+    }
+
+    @Test
+    @DisplayName("reroll skull land and count number of skull test 5")
+    void rerollSkullLandAndCountNOSkullTest5() {
+        scannerInput("1");
+        game = new PirateGame();
+        Player player = new Player("Di");
+        player.setFortuneCard("monkey business");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "skull", "skull", "coin", "coin", "coin"};
+        int numOfSkull = game.rerollSkullLandAndCountNOSkull(roll, player);
+        assertTrue(numOfSkull <= -5);
+    }
 }

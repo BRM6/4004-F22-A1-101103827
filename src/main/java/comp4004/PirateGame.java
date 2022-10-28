@@ -420,6 +420,10 @@ public class PirateGame implements Serializable {
         p.setScore(p.getScore() + scoreChest);
     }
 
+    public int rerollSkullLandAndCountNOSkull(String [] r, Player player){ // return # of skull in total after skull island
+        return 0;
+    }
+
 
 
 
