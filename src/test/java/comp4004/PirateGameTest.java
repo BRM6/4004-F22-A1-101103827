@@ -1106,5 +1106,47 @@ class PirateGameTest {
         assertEquals(1100, final_score);
     }
 
+    //treasure chest
+    @Test
+    @DisplayName("test row 92")
+    void testRow92() {
+        //init
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("treasure chest");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+        String[] chestIndex = new String[8];
 
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<2){
+                die[i] = "skull";
+            }
+            if (i>=2 && i<5){
+                die[i] = "parrots";
+            }
+            if (i>=5 && i<8){
+                die[i] = "coin";
+            }
+        }
+        chestIndex = new String[]{"5", "6", "7"};
+        String[] hold = {"0", "1"}; //select dice to hold
+        die = game.RerollWithChestHold(die, hold, chestIndex); //reroll
+        //assign dice
+        die[2] = "diamond";
+        die[3] = "diamond";
+        die[4] = "coin";
+        chestIndex = new String[]{"4", "5", "6", "7"};
+        hold = new String[]{"0", "1"}; //select dice to hold
+        die = game.RerollWithChestHold(die, hold, chestIndex); //reroll
+        die[2] = "skull";
+        die[3] = "coin";
+        p.setHoldingDie(chestIndex);
+        game.scoreChest(p, die);
+        int final_score = p.getScore();
+        assertEquals(600, final_score, "Player die in this round, now score with the dice in chest");
+    }
 }
