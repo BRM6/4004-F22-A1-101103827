@@ -61,8 +61,9 @@ public class PirateGame implements Serializable {
     }
 
     public String rollSingleDie(){
-
-        return null;
+        Random rand = new Random();
+        int index = rand.nextInt(6);
+        return diePattern[index];
     }
 
 
