@@ -24,6 +24,11 @@ public class PirateGame implements Serializable {
     public void emptyHoldingRoll(){holding_roll = new String[8];}
 
     ////////////////////////////////
+    public Player getWinner(Player[] pl) {
+        Player winner = pl[0];
+
+        return winner;
+    }
 
 
     public void connectToClient(){
