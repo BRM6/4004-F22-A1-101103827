@@ -407,7 +407,17 @@ public class PirateGame implements Serializable {
     }
 
     public void scoreChest(Player p, String[] current){
-
+        System.out.println("Player die, value in the chest has been added to player's final score, and player turn ended");
+        String[] buffer = new String[8];
+        for (int i = 0; i< p.getHoldingDie().length; i++ ){ //add dice in chest into buffer
+            if (p.getHoldingDie()[i] != null){
+                buffer[Integer.parseInt(p.getHoldingDie()[i])] = current[Integer.parseInt(p.getHoldingDie()[i])];
+            }
+        }
+        int scoreChest = scoreForKindsAndChest(buffer, p) + scoreForDC(buffer, p);
+        System.out.println(scoreForKindsAndChest(p.getHoldingDie(), p));
+        System.out.println(scoreForDC(p.getHoldingDie(), p));
+        p.setScore(p.getScore() + scoreChest);
     }
 
 
