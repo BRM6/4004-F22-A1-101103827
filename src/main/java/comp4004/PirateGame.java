@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -132,6 +133,12 @@ public class PirateGame implements Serializable {
             }
         }
         return player_score;
+    }
+
+    public int scoreForKindsAndChest(String[] r, Player player){
+
+        return 0;
+
     }
 
 
