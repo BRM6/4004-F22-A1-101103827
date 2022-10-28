@@ -421,7 +421,57 @@ public class PirateGame implements Serializable {
     }
 
     public int rerollSkullLandAndCountNOSkull(String [] r, Player player){ // return # of skull in total after skull island
-        return 0;
+        int count = 0;
+        boolean continueThrow;
+        System.out.println("PLAYER IS IN SKULL ISLAND");
+        System.out.println("Enter 1 to re-roll for skull island, Enter 0 to end your turn");
+        String ifSkullLand = scanner.nextLine();
+        if (ifSkullLand.matches("-?\\d+") && (Integer.parseInt(ifSkullLand) == 1)){
+            continueThrow = true;
+        }else{
+            continueThrow = false;
+        }
+        int numOfSkull = 0;
+        for (int i=0; i<8; i++){
+            if (r[i] == "skull"){
+                numOfSkull++;
+            }
+        }
+
+        while (continueThrow){ //re-roll step for skull island
+
+            if (numOfSkull > 6){
+                break;
+            }else {
+                continueThrow = false;
+                for (int i=0; i<8; i++){
+                    if (r[i] != "skull"){
+                        r[i] = rollSingleDie();
+                        if (r[i] == "skull"){
+                            numOfSkull++;
+                            continueThrow = true;
+                        }
+                    }
+                }
+                System.out.println("Player card is : " + player.getFortuneCard() + " Player current roll is : " + Arrays.toString(r));
+                if (numOfSkull == 8){
+                    continueThrow = false;
+                }
+            }
+        }
+
+        //after all, recount # of skull
+        if (player.getFortuneCard() == "1 skull"){
+            numOfSkull += 1;
+        }
+        if (player.getFortuneCard() == "2 skull"){
+            numOfSkull += 2;
+        }
+        if (player.getFortuneCard() == "captain"){
+            numOfSkull = numOfSkull * 2;
+        }
+
+        return numOfSkull * -1;
     }
 
 
