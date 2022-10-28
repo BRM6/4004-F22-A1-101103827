@@ -270,5 +270,27 @@ class PirateGameUnitTest {
         Assertions.assertEquals(200, player.getScore());
     }
 
+    @Test
+    @DisplayName("score with captain card test 1")
+    void scoreWhenCapTest1() {
+        Player player = new Player("Di");
+        player.setFortuneCard("captain");
+        game.setNewPlayer(player);
+        String[] player_die = {"sword", "parrots", "parrots", "parrots", "parrots", "parrots", "sword", "sword"};
+        game.calculateScoreForARoundWithCapMonkey(player, player_die);
+        Assertions.assertEquals(2200, player.getScore());
+    }
+
+    @Test
+    @DisplayName("score with captain card test 2")
+    void scoreWhenCapTest2() {
+        Player player = new Player("Di");
+        player.setFortuneCard("captain");
+        game.setNewPlayer(player);
+        String[] player_die = {"sword", "parrots", "parrots", "parrots", "skull", "skull", "sword", "sword"};
+        game.calculateScoreForARoundWithCapMonkey(player, player_die);
+        Assertions.assertEquals(400, player.getScore());
+    }
+
 
 }
