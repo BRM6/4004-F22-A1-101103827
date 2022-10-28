@@ -114,6 +114,11 @@ public class PirateGame implements Serializable {
         return buffer;
     }
 
+    public int scoreForDC(String[] r, Player player){
+
+        return 0;
+    }
+
 
 
 

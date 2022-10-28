@@ -149,4 +149,38 @@ class PirateGameUnitTest {
         assertTrue(player.getFortuneCard() == "sorceress");
     }
 
+    @Test
+    @DisplayName("score for diamond and coin test 1")
+    void scoreForDCTest1() {
+        Player player = new Player("Di");
+        player.setFortuneCard("coin");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "parrots", "parrots", "parrots", "parrots", "coin", "coin", "coin"};
+        int score = game.scoreForDC(roll, player);
+        assertEquals(400, score);
+    }
+
+    @Test
+    @DisplayName("score for diamond and coin test 2")
+    void scoreForDCTest2() {
+        Player player = new Player("Di");
+        player.setFortuneCard("diamond");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "parrots", "parrots", "parrots", "parrots", "coin", "coin", "coin"};
+        int score = game.scoreForDC(roll, player);
+        assertEquals(400, score);
+    }
+
+    @Test
+    @DisplayName("score for diamond and coin test 3")
+    void scoreForDCTest3() {
+        Player player = new Player("Di");
+        player.setFortuneCard("captain");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "parrots", "parrots", "parrots", "diamond", "coin", "coin", "coin"};
+        int score = game.scoreForDC(roll, player);
+        assertEquals(400, score);
+    }
+
+
 }
