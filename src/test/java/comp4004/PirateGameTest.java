@@ -1308,4 +1308,31 @@ class PirateGameTest {
         assertEquals(1200, final_score);
     }
 
+
+    //skulls island and skull fortune card
+    @Test
+    @DisplayName("test row 106")
+    void testRow106() {
+        //init
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("2 skull");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<1){
+                die[i] = "skull";
+            }
+            if (i>=1 && i<8){
+                die[i] = "sword";
+            }
+        }
+        boolean final_state = game.checkIfDie(die, p);
+        assertTrue(final_state);
+    }
+
 }
