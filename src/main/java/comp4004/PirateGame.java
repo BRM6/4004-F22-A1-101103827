@@ -136,8 +136,91 @@ public class PirateGame implements Serializable {
     }
 
     public int scoreForKindsAndChest(String[] r, Player player){
+        boolean isDie = checkIfDie(r, player);
+        if (isDie){
+            return 0;
+        }
+        int scoreKind = 0;
 
-        return 0;
+        // put value in hash map
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        //count fortune card while calculate value of kind
+        if (player.getFortuneCard() == "coin"){
+            map.put("coin", 1);
+        } else if (player.getFortuneCard() == "diamond") {
+            map.put("diamond", 1);
+        }
+
+        for (String i : r){
+            if (i != null){
+                if (map.containsKey(i)){
+                    map.put(i, (map.get(i) + 1) );
+                }
+                else {
+                    map.put(i, 1);
+                }
+            }
+        }
+
+        //score for kinds
+        for (String key : map.keySet()){
+            if (key != "skull" && key != null) {
+                if (map.get(key) == 3){
+                    scoreKind += 100;
+                }
+                if (map.get(key) == 4){
+                    scoreKind += 200;
+                }
+                if (map.get(key) == 5){
+                    scoreKind += 500;
+                }
+                if (map.get(key) == 6){
+                    scoreKind += 1000;
+                }
+                if (map.get(key) == 7){
+                    scoreKind += 2000;
+                }
+                if (map.get(key) >= 8){
+                    scoreKind += 4000;
+                }
+
+            }
+        }
+
+
+        //score for chest
+        if (map.containsKey("skull")){ //if there is skull
+            return scoreKind;
+        }
+        boolean isChest = true;
+        for (String pat : map.keySet()){
+            if (map.get(pat) < 3){
+                if (pat == "coin" || pat == "diamond"){
+                    continue;
+                }else {
+                    if (pat == "sword"){
+                        if (map.get(pat) == 2 && player.getFortuneCard() == "2 sword"){
+                            continue;
+                        }
+                        else {
+                            isChest = false;
+                        }
+                    }
+                    else {
+                        isChest = false;
+                    }
+                }
+            }
+        }
+        int count = 0;
+        for (int i : map.values()){
+            count += i;
+        }
+        if (isChest && count >= 8){
+            scoreKind += 500;
+        }
+
+        return scoreKind;
 
     }
 
