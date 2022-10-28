@@ -123,5 +123,30 @@ class PirateGameUnitTest {
         assertTrue(player.getFortuneCard() == "treasure chest" || player.getFortuneCard() == "sorceress" || player.getFortuneCard() == "captain" || player.getFortuneCard() == "monkey business" || player.getFortuneCard() == "diamond" || player.getFortuneCard() == "coin" || player.getFortuneCard() == "2 skull" || player.getFortuneCard() == "1 skull" || player.getFortuneCard() == "2 sword" || player.getFortuneCard() == "3 sword" || player.getFortuneCard() == "4 sword");
     }
 
+    @Test
+    @DisplayName("use sorceress test 1")
+    void useSorceressTest1() {
+        scannerInput("1");
+        Player player = new Player("Di");
+        player.setFortuneCard("sorceress");
+        game = new PirateGame();
+        game.setNewPlayer(player);
+        String[] before_roll = {"skull", "sword", "parrots", "parrots", "parrots", "parrots", "parrots", "parrots"};
+        game.useSorceress(before_roll, player);
+        assertTrue(player.getFortuneCard() == "not sorceress");
+    }
+
+    @Test
+    @DisplayName("use sorceress test 2")
+    void useSorceressTest2() {
+        scannerInput("0");
+        Player player = new Player("Di");
+        player.setFortuneCard("sorceress");
+        game = new PirateGame();
+        game.setNewPlayer(player);
+        String[] before_roll = {"skull", "sword", "parrots", "parrots", "parrots", "parrots", "parrots", "parrots"};
+        String[] after = game.useSorceress(before_roll, player);
+        assertTrue(player.getFortuneCard() == "sorceress");
+    }
 
 }

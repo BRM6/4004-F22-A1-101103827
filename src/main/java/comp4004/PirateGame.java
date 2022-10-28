@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -93,6 +94,11 @@ public class PirateGame implements Serializable {
         }
     }
 
+    public String[] useSorceress(String[] r, Player player){
+        String[] buffer = Arrays.copyOf(r, 8);
+
+        return buffer;
+    }
 
 
 
