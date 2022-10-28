@@ -67,7 +67,30 @@ public class PirateGame implements Serializable {
     }
 
     public void drawForturnCard(Player p){
-
+        int cardIndex = (int) (Math.random() * 34);
+        if (cardIndex < 4){
+            p.setFortuneCard("treasure chest");
+        } else if (cardIndex >= 4 && cardIndex < 8) {
+            p.setFortuneCard("sorceress");
+        } else if (cardIndex>=8 && cardIndex<12) {
+            p.setFortuneCard("captain");
+        } else if (cardIndex>=12 && cardIndex<16) {
+            p.setFortuneCard("monkey business");
+        } else if (cardIndex>=16 && cardIndex<20) {
+            p.setFortuneCard("diamond");
+        } else if (cardIndex>=20 && cardIndex<24) {
+            p.setFortuneCard("coin");
+        } else if (cardIndex>=24 && cardIndex<26){
+            p.setFortuneCard("2 skull");
+        } else if (cardIndex>=26 && cardIndex<29) {
+            p.setFortuneCard("1 skull");
+        } else if (cardIndex>=29 && cardIndex<31) {
+            p.setFortuneCard("2 sword");
+        } else if (cardIndex>=31 && cardIndex<33) {
+            p.setFortuneCard("3 sword");
+        } else if (cardIndex>=33 && cardIndex<35) {
+            p.setFortuneCard("4 sword");
+        }
     }
 
 
