@@ -1402,4 +1402,39 @@ class PirateGameTest {
         Assertions.assertEquals(0, p.getScore());
     }
 
+    @Test
+    @DisplayName("test row 110")
+    void testRow110() {
+        //init
+        scannerInput("1");
+        game = new PirateGame();
+        Player p = new Player("Di");
+        game.drawForturnCard(p);
+        p.setFortuneCard("captain");
+        game.setNewPlayer(p);
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<5){
+                die[i] = "skull";
+            }
+            if (i>=5 && i<8){
+                die[i] = "monkey";
+            }
+        }
+        String[] hold = new String[]{"0", "1", "2", "3", "4"}; //select dice to hold
+        die = game.RerollWithHold(die, hold); //reroll
+        //assign dice
+        die[5] = "skull";
+        die[6] = "skull";
+        die[7] = "coin";
+        int final_num_skull = game.rerollSkullLandAndCountNOSkull(die, p);
+        int final_deduct = final_num_skull * 100;
+        assertEquals(-1400, final_deduct);
+        Assertions.assertEquals(0, p.getScore());
+    }
+
 }
