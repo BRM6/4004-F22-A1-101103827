@@ -7,6 +7,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class PirateGameUnitTest {
     private ByteArrayOutputStream testOut;
     private final PrintStream systemOut = System.out;
@@ -50,6 +53,7 @@ class PirateGameUnitTest {
         Player winner = game.getWinner(playerList);
         Assertions.assertEquals("name3", winner.getName());
     }
+
     @Test
     @DisplayName("get winner test 2")
     void getWinnerTest2() {
@@ -67,4 +71,41 @@ class PirateGameUnitTest {
         Player winner = game.getWinner(playerList);
         Assertions.assertEquals("name2", winner.getName());
     }
+
+    @Test
+    @DisplayName("check if die test 1")
+    void checkIfDieTest1() {
+        Player player = new Player("Di");
+        player.setFortuneCard("sorceress");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "sword", "parrots", "parrots", "parrots", "parrots", "parrots", "parrots"};
+        boolean isDie = game.checkIfDie(roll, player);
+        assertFalse(isDie);
+    }
+
+    @Test
+    @DisplayName("check if die test 2")
+    void checkIfDieTest2() {
+        scannerInput("1");
+        Player player = new Player("Di");
+        player.setFortuneCard("sorceress");
+        game = new PirateGame();
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "skull", "parrots", "parrots", "parrots", "parrots"};
+        boolean isDie = game.checkIfDie(roll, player);
+        assertFalse(isDie);
+    }
+
+    @Test
+    @DisplayName("check if die test 3")
+    void checkIfDieTest3() {
+        Player player = new Player("Di");
+        player.setFortuneCard("captain");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "parrots", "parrots", "parrots", "parrots", "parrots"};
+        boolean isDie = game.checkIfDie(roll, player);
+        assertTrue(isDie);
+    }
+
+
 }

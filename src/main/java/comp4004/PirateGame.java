@@ -34,6 +34,16 @@ public class PirateGame implements Serializable {
         return winner;
     }
 
+    public boolean checkIfDie(String[] r, Player player){ //checking current roll if died, if died, return true; if not die return false
+        return false;
+    }
+
+
+
+
+
+
+
 
     public void connectToClient(){
         clientConnection = new Client();
