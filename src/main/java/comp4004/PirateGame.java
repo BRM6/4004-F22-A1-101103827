@@ -294,6 +294,11 @@ public class PirateGame implements Serializable {
         }
     }
     public void calculateScoreForARoundWithCapMonkey(Player p, String[] current){
+        if (p.getFortuneCard() == "captain"){
+            scoreWhenCap(p, current);
+        } else if (p.getFortuneCard() == "monkey business") {
+            scoreForMonkeyB(p, current);
+        }
 
     }
 
@@ -302,7 +307,19 @@ public class PirateGame implements Serializable {
     }
 
     public void scoreForMonkeyB(Player player, String[] r){
-
+        int score = 0;
+        for (int i = 0; i<8; i++){ //change parrot and monkey to be same
+            if (r[i] == "parrots"){
+                r[i] = "monkey";
+                System.out.println("changed one parrots");
+                System.out.println();
+            }
+        }
+        System.out.println("After changing parrot to monkey, new roll is : " + Arrays.toString(r));
+        score = scoreForKindsAndChest(r, player) + scoreForDC(r, player);
+        player.setScore(player.getScore() + (score));
+        System.out.println("Player card is Monkey Business, current round parrot and monkey will be the same");
+        System.out.println("Player final score for this round is: " + score);
     }
 
 
