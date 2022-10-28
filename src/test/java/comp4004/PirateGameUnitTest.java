@@ -314,4 +314,20 @@ class PirateGameUnitTest {
         Assertions.assertEquals(1100, player.getScore());
     }
 
+    @Test
+    @DisplayName("reRoll without hold test 1")
+    void reRollWithoutHoldTest1() {
+        String[] before_roll = {"uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] after_roll = game.reRollWithoutHold(before_roll);
+        assertTrue(before_roll != after_roll);
+    }
+
+    @Test
+    @DisplayName("reRoll without hold test 2")
+    void reRollWithoutHoldTest2() {
+        String[] before_roll = {"skull", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] after_roll = game.reRollWithoutHold(before_roll);
+        assertEquals("skull" , after_roll[0]);
+        assertTrue(before_roll != after_roll);
+    }
 }

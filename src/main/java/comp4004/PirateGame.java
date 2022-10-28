@@ -325,6 +325,12 @@ public class PirateGame implements Serializable {
         System.out.println("Player final score for this round is: " + score);
     }
 
+    public String[] reRollWithoutHold(String[] current){
+        String[] buffer = new String[8];
+        
+        return buffer;
+    }
+
 
 
 
