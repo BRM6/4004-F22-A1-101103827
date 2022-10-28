@@ -66,6 +66,10 @@ public class PirateGame implements Serializable {
         return diePattern[index];
     }
 
+    public void drawForturnCard(Player p){
+
+    }
+
 
 
 

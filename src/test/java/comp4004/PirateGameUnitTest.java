@@ -114,5 +114,14 @@ class PirateGameUnitTest {
         assertNotEquals("uncoin", roll[0]);
     }
 
+    @Test
+    @DisplayName("draw forturn card test 1")
+    void drawForturnCardTest() {
+        Player player = new Player("Di");
+        game.drawForturnCard(player);
+        game.setNewPlayer(player);
+        assertTrue(player.getFortuneCard() == "treasure chest" || player.getFortuneCard() == "sorceress" || player.getFortuneCard() == "captain" || player.getFortuneCard() == "monkey business" || player.getFortuneCard() == "diamond" || player.getFortuneCard() == "coin" || player.getFortuneCard() == "2 skull" || player.getFortuneCard() == "1 skull" || player.getFortuneCard() == "2 sword" || player.getFortuneCard() == "3 sword" || player.getFortuneCard() == "4 sword");
+    }
+
 
 }
