@@ -330,4 +330,51 @@ class PirateGameUnitTest {
         assertEquals("skull" , after_roll[0]);
         assertTrue(before_roll != after_roll);
     }
+
+    @Test
+    @DisplayName("reRoll with hold test 1")
+    void rerollWithHoldTest1() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {"0", "1"};
+        String[] after_roll = game.RerollWithHold(before_roll, hold);
+        assertEquals("uncoin", after_roll[0]);
+        assertEquals("undiamond", after_roll[1]);
+        assertTrue(before_roll != after_roll);
+    }
+
+    @Test
+    @DisplayName("reRoll with hold test 2")
+    void rerollWithHoldTest2() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {"0", "1", "2", "3", "4", "5", "6"};
+        String[] after_roll = game.RerollWithHold(before_roll, hold);
+        assertTrue(before_roll == after_roll);
+    }
+
+    @Test
+    @DisplayName("reRoll with hold test 3")
+    void rerollWithHoldTest3() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {"0", "1", "2", "3", "4", "5", "6", "7"};
+        String[] after_roll = game.RerollWithHold(before_roll, hold);
+        assertTrue(before_roll == after_roll);
+    }
+
+    @Test
+    @DisplayName("reRoll with hold test 4")
+    void rerollWithHoldTest4() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {};
+        String[] after_roll = game.RerollWithHold(before_roll, hold);
+        assertTrue(before_roll != after_roll);
+    }
+
+    @Test
+    @DisplayName("reRoll with hold test 5")
+    void rerollWithHoldTest5() {
+        String[] before_roll = {"uncoin", "undiamond", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin", "uncoin"};
+        String[] hold = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String[] after_roll = game.RerollWithHold(before_roll, hold);
+        assertTrue(before_roll == after_roll);
+    }
 }
