@@ -492,8 +492,158 @@ public class PirateGame implements Serializable {
         if (numOfSkull > 3){
             return true;
         }
-
         return false;
+    }
+
+    public void showSelections(){
+        System.out.println("Enter a number (1-4) to make decision");
+        System.out.println("1 : Start to re-roll");
+        System.out.println("2 : End the current round and score");
+        if (player.getFortuneCard() == "treasure chest"){
+            System.out.println("3 : Put some dice in chest and re-roll");
+        }
+    }
+
+    public int playARound(Player player){ //actual game loop with game logic
+        //init some values
+        int numOfSkull = 0;
+        boolean isGoing = true;
+        player.emptyHoldingDie();
+
+        // first time roll all dice for player
+        for (int i=0; i<8; i++){
+            current_roll[i] = rollSingleDie();
+
+        }
+        System.out.println("PLAYER'S CARD IS : " + player.getFortuneCard() + "   AFTER FIRST ROLL PLAYER'S ROLL IS : " + Arrays.toString(current_roll));
+        player.nextRound();
+
+        current_roll = useSorceress(current_roll, player); //ask player if he has sorceress card and if he wants to use sorceress card
+        boolean rollState = checkIfDie(current_roll, player);//ask roll state
+        if (rollState){
+            isGoing = false;
+            System.out.println("PLAYER DIE, END OF TURN");
+        }
+
+        // game loop, all the game steps
+        while (isGoing){
+            //if its skull island
+            if (isSkullLand(current_roll)){ //if its skull island
+                isGoing = false;
+                numOfSkull = rerollSkullLandAndCountNOSkull(current_roll, player);
+                System.out.println("Player has " + numOfSkull + " skulls in total");
+                break; // return # of skull in negative number
+            }
+
+            showSelections();
+            int player_selection = Integer.parseInt(scanner.nextLine());
+            System.out.println("Player's selection is : " + player_selection);
+
+            //if player choose to hold dice and re-roll others
+            if (player_selection == 1){                                                             // selection 1
+                System.out.println("Select the dice index you want to hold (from 0 to 7),separate by one comma; Enter anynumber that greater than 7 will roll all dice except for skull");
+                String input = scanner.nextLine();
+
+                // checking if player input is not between 0-7
+                if (input.matches("-?\\d+") && (Integer.parseInt(input) > 8 || 0 < Integer.parseInt(input))){
+                    System.out.println("Before re-roll, roll is : " + Arrays.toString(current_roll));
+                    current_roll = reRollWithoutHold(current_roll);
+                    System.out.println("After re-roll without hold, new roll is : " + Arrays.toString(current_roll));
+
+                }else{
+                    holding_roll = input.replaceAll("\\s", "").split(",");
+                    System.out.println("Player want to hold these dice index" + Arrays.toString(holding_roll));
+                    System.out.println("Now reroll dice");
+                    current_roll = RerollWithHold(current_roll, holding_roll);
+                    System.out.println("After hold and reroll, new roll is : " + Arrays.toString(current_roll));
+                }
+
+                System.out.println();
+                current_roll = useSorceress(current_roll, player);
+                rollState = checkIfDie(current_roll, player);
+                //check is dead
+                if (rollState){
+                    isGoing = false;
+                    player.setScore(player.getScore());
+                    System.out.println("PLAYER DIE, END OF TURN");
+                }
+
+                //if its skull island
+                if (isSkullLand(current_roll)){ //if its skull island
+                    isGoing = false;
+                    numOfSkull = rerollSkullLandAndCountNOSkull(current_roll, player);
+                    System.out.println("Player has " + numOfSkull + " skulls in total");
+                    break; // return # of skull in negative number
+                }
+
+
+            } else if (player_selection == 2) {
+                current_roll = useSorceress(current_roll, player);
+                if (checkIfDie(current_roll, player)){
+                    isGoing = false;
+                    player.setScore(player.getScore());
+                    System.out.println("PLAYER DIE, END OF TURN");
+                }
+
+                //checking sea battle
+                if (player.getFortuneCard() == "2 sword" || player.getFortuneCard() == "3 sword" || player.getFortuneCard() == "4 sword"){
+                    System.out.println("Dealing with sea battle");
+                    seaBattle(player, current_roll);
+                } else if (player.getFortuneCard() == "captain" || player.getFortuneCard() == "monkey business") {
+                    calculateScoreForARoundWithCapMonkey(player, current_roll);
+                }else {
+                    int pScore = scoreForKindsAndChest(current_roll, player) +  scoreForDC(current_roll, player);
+                    int player_total_score = player.getScore() + pScore;
+                    player.setScore(player_total_score);
+                    System.out.println("Your score for this round is : " + pScore);
+                    System.out.println("Your final score is : " + player_total_score);
+                }
+                isGoing = false;
+
+            } else if (player_selection == 3) {
+                //ask player to select dice
+                System.out.println("Player fortune card is : " + player.getFortuneCard() + " player current roll is : " + Arrays.toString(current_roll));
+                System.out.println("Select the index of dice which you want to put into chest (from 0 - 7), separate by one comma");
+                String[] diceToChest = scanner.next().replaceAll("\\s", "").split(",");
+
+                //putting selected dice into chest
+                System.out.println("Player want to put these dice in chest" + Arrays.toString(diceToChest));
+                System.out.println("Putting selected dice into chest...");
+
+                player.setHoldingDie(diceToChest);
+                System.out.println("Player's chest now has : " + Arrays.toString(player.getHoldingDie()));
+
+                //player hold dice
+                System.out.println("Select the dice you want to hold, separate by one comma");
+                String[] input = scanner.next().replaceAll("\\s", "").split(",");
+                System.out.println("Player want to hold these dice (did not put into chest) : ");
+                System.out.println(input);
+
+                //re-roll
+                current_roll = RerollWithChestHold(current_roll, input, diceToChest);
+
+                System.out.println("After hold and re-roll, new roll is : " );
+                System.out.println();
+                System.out.println("Player current info showing below: ");
+                System.out.println("Player fortune card is : " + player.getFortuneCard() + " player current roll is : " + Arrays.toString(current_roll));
+                current_roll = useSorceress(current_roll, player);
+                rollState = checkIfDie(current_roll, player);
+
+                //check is dead
+                if (rollState){
+                    isGoing = false;
+                    scoreChest(player, current_roll);
+                }
+            }
+        }
+        System.out.println("Your turn end, now waiting for other players to play");
+        emptyCurrentRoll();
+        emptyHoldingRoll();
+        if (Math.abs(numOfSkull) > 3){
+            return numOfSkull;
+        }else {
+            return player.getScore();
+        }
     }
 
 
