@@ -224,7 +224,74 @@ public class PirateGame implements Serializable {
     }
 
     public void seaBattle(Player p, String[] current){
+        int player_score = 0;
+        int numOfSword = 0;
+        int numOfSkull = 0;
 
+        for (String die : current){
+            if (die == "sword"){
+                numOfSword++;
+            }
+            if (die == "skull"){
+                numOfSkull++;
+            }
+        }
+
+        if (numOfSkull < 3){
+            int player_score_kind = scoreForKindsAndChest(current, p);
+            int player_score_DC = scoreForDC(current, p);
+            player_score = player_score_kind + player_score_DC;
+            System.out.println("Player's score before sea battle = " + player_score);
+            p.setScore(player_score);
+
+            if (p.getFortuneCard() == "2 sword"){
+                current = useSorceress(current, player);
+                if ( numOfSword >= 2 && !(checkIfDie(current, player)) ){
+                    p.setScore(p.getScore() + 300);
+                    System.out.println("PLAYER WON SEA BATTLE");
+                    System.out.println("Player's score after applied sea battle " + p.getScore());
+                }
+                else{
+                    p.setScore(p.getScore() - 300);
+                    System.out.println("PLAYER LOST SEA BATTLE");
+                    System.out.println("Player's score after applied sea battle " + p.getScore());
+                }
+            }
+            if (p.getFortuneCard() == "3 sword"){
+                current = useSorceress(current, player);
+                if ( numOfSword >= 3 && !(checkIfDie(current, player)) ){
+                    p.setScore(p.getScore() + 500);
+                    System.out.println("PLAYER WON SEA BATTLE");
+                    System.out.println("Player's score after applied sea battle " + p.getScore());
+                }
+                else{
+                    p.setScore(p.getScore() - 500);
+                    System.out.println("PLAYER LOST SEA BATTLE");
+                    System.out.println("Player's score after applied sea battle " + p.getScore());
+                }
+            }
+            if (p.getFortuneCard() == "4 sword"){
+                current = useSorceress(current, player);
+                if ( numOfSword >= 4 && !(checkIfDie(current, player)) ){
+                    p.setScore(p.getScore() + 1000);
+                    System.out.println("PLAYER WON SEA BATTLE");
+                    System.out.println("Player's score after applied sea battle " + p.getScore());
+                }
+                else{
+                    p.setScore(p.getScore() - 1000);
+                    System.out.println("PLAYER LOST SEA BATTLE");
+                    System.out.println("Player's score after applied sea battle " + p.getScore());
+                }
+            }
+
+//        player score cant go below 0
+            if (p.getScore() < 0){
+                p.setScore(0);
+            }
+        }else{
+            System.out.println("Your are in Sea battle and you can not go to skull island, since you have 3 or more than 3 skulls, your round end");
+            p.setScore(p.getScore());
+        }
     }
 
 
