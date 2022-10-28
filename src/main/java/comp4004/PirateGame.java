@@ -115,8 +115,23 @@ public class PirateGame implements Serializable {
     }
 
     public int scoreForDC(String[] r, Player player){
+        boolean isDie = checkIfDie(r, player);
+        if (isDie){
+            return 0;
+        }
+        int player_score = 0;
 
-        return 0;
+        //calculate value for player card
+        if (player.getFortuneCard() == "coin" || player.getFortuneCard() == "diamond") {
+            player_score += 100;
+        }
+
+        for (String i : r){
+            if (i != null && (i == "coin" || i == "diamond") ){
+                player_score += 100;
+            }
+        }
+        return player_score;
     }
 
 
