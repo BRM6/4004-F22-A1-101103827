@@ -474,6 +474,10 @@ public class PirateGame implements Serializable {
         return numOfSkull * -1;
     }
 
+    public boolean isSkullLand(String[] r){
+        return false;
+    }
+
 
 
 

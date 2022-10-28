@@ -512,4 +512,24 @@ class PirateGameUnitTest {
         int numOfSkull = game.rerollSkullLandAndCountNOSkull(roll, player);
         assertTrue(numOfSkull <= -5);
     }
+
+    @Test
+    @DisplayName("is skull island test 1")
+    void isSkullLandTest1() {
+        Player player = new Player("Di");
+        player.setFortuneCard("monkey business");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "skull", "skull", "skull", "skull", "coin", "coin", "coin"};
+        assertTrue(game.isSkullLand(roll) == true);
+    }
+
+    @Test
+    @DisplayName("is skull island test 2")
+    void isSkullLandTest2() {
+        Player player = new Player("Di");
+        player.setFortuneCard("monkey business");
+        game.setNewPlayer(player);
+        String[] roll = {"skull", "coin", "coin", "coin", "coin", "coin", "coin", "coin"};
+        assertTrue(game.isSkullLand(roll) == false);
+    }
 }
