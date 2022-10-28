@@ -421,4 +421,30 @@ class PirateGameUnitTest {
         String[] after_roll = game.RerollWithChestHold(before_roll, hold, chest);
         assertTrue(before_roll != after_roll);
     }
+
+    @Test
+    @DisplayName("score chest test 1")
+    void scoreChestTest1() {
+        Player player = new Player("Di");
+        player.setFortuneCard("treasure chest");
+        game.setNewPlayer(player);
+        String[] player_die = {"coin", "parrots", "monkey", "sword", "sword", "sword", "sword", "parrots"};
+        String[] player_die_index = {"0","1","2","3","4","5","6","7"};
+        player.setHoldingDie(player_die_index);
+        game.scoreChest(player, player_die);
+        Assertions.assertEquals(300, player.getScore());
+    }
+
+    @Test
+    @DisplayName("score chest test 2")
+    void scoreChestTest2() {
+        Player player = new Player("Di");
+        player.setFortuneCard("treasure chest");
+        game.setNewPlayer(player);
+        String[] player_die = {"sword", "parrots", "parrots", "parrots", "parrots", "parrots", "sword", "sword"};
+        String[] player_die_index = {"0","1","2","3","4","5","6","7"};
+        player.setHoldingDie(player_die_index);
+        game.scoreChest(player, player_die);
+        Assertions.assertEquals(1100, player.getScore());
+    }
 }

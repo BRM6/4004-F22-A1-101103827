@@ -406,6 +406,10 @@ public class PirateGame implements Serializable {
         return buffer;
     }
 
+    public void scoreChest(Player p, String[] current){
+
+    }
+
 
 
 
