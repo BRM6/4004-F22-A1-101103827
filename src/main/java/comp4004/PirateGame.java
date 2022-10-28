@@ -342,6 +342,34 @@ public class PirateGame implements Serializable {
 
     public String[] RerollWithHold(String[] current, String[] holding){
         String[] buffer = new String[8];
+        int count = 0;
+        if (holding.length < 7){
+            for (int i = 0; i<8; i++){
+                if (current[i] == "skull"){ //hold skull
+                    buffer[i] = "skull";
+                }
+            }
+            for (int i = 0; i< holding.length; i++ ){ //hold holding_dice
+                buffer[Integer.parseInt(holding[i])] = current[Integer.parseInt(holding[i])];
+            }
+            for (int i = 0; i<8; i++){ //count # of re-roll die
+                if (buffer[i] == null){
+                    count++;
+                }
+            }
+            if (count >= 2){
+                for (int i = 0; i<8; i++){ //re-roll
+                    if (buffer[i] == null){
+                        buffer[i] = rollSingleDie();
+                    }
+                }
+            }else {
+                System.out.println("You have to re-roll at least two dice together");
+                return current;
+            }
+        }else {
+            return current;
+        }
 
         return buffer;
     }
