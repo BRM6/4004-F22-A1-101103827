@@ -1,0 +1,7 @@
+Round 1 Started
+Player1's information is following......name : name1 ----- card : captain ----- current roll : [skull, skull, skull, monkey, monkey, monkey, monkey, monkey] ----- score : 0
+Player2's information is following......name : name2 ----- card : captain ----- current roll : [sword, sword, sword, sword, sword, sword, sword, skull] ----- score : 4000
+Player3's information is following......name : name3 ----- card : 2 skull ----- current roll : [skull, swords, swords, swords, swords, swords, swords, swords] ----- score : 0
+Round 2 Started
+Player1's information is following......name : name1 ----- card : captain ----- current roll : [sword, sword, sword, sword, sword, sword, sword, sword] ----- score : 9000
+The winner is name1 with 9000 points!!!

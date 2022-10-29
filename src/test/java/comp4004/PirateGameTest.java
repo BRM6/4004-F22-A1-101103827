@@ -2041,5 +2041,126 @@ class PirateGameTest {
         printWriter.close();
     }
 
+    @Test
+    @DisplayName("test row 142")
+    void testRow142() throws FileNotFoundException {
+        PrintWriter printWriter = new PrintWriter("row142.txt");
+        //init players
+        Player p1 = new Player("name1");
+        game.drawForturnCard(p1);
+        p1.setFortuneCard("captain");
+        game.setNewPlayer(p1);
+        String[] die1 = new String[8];
+
+        Player p2 = new Player("name2");
+        game.drawForturnCard(p2);
+        p2.setFortuneCard("captain");
+        game.setNewPlayer(p2);
+        String[] die2 = new String[8];
+
+        Player p3 = new Player("name3");
+        game.drawForturnCard(p3);
+        p3.setFortuneCard("2 skull");
+        game.setNewPlayer(p3);
+        String[] die3 = new String[8];
+
+        Player[] player_list = new Player[3];
+        player_list[0] = p1;
+        player_list[1] = p2;
+        player_list[2] = p3;
+
+        //player 1 move
+        for (int i=0; i<8; i++){               //roll die
+            die1[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++) {            //assign dies
+            if (i < 3) {
+                die1[i] = "skull";
+            }
+            if (i >= 3 && i < 8) {
+                die1[i] = "monkey";
+            }
+        }
+        game.calculateScoreForARoundWithCapMonkey(p1, die1);  //player1_final_score = p1.getScore()
+        int player1_final_score = p1.getScore();
+        assertEquals(0, player1_final_score);
+        p1.setCurrentRoll(die1);
+        printWriter.println(
+                ("Round 1 Started"));
+        printWriter.println(
+                ("Player1's information is following......" +
+                        "name : %s ----- card : %s ----- current roll : %s ----- score : %d").formatted(p1.getName(), p1.getFortuneCard(), Arrays.toString(p1.getCurrentRoll()) ,p1.getScore())
+        );
+
+        //player 2 move
+        for (int i=0; i<8; i++){               //roll die
+            die2[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++) {            //assign dies
+            if (i < 7) {
+                die2[i] = "sword";
+            }
+            if (i >= 7 && i < 8) {
+                die2[i] = "skull";
+            }
+        }
+        game.calculateScoreForARoundWithCapMonkey(p2, die2);
+        Assertions.assertEquals(4000, p2.getScore());
+        p2.setCurrentRoll(die2);
+        printWriter.println(
+                ("Player2's information is following......" +
+                        "name : %s ----- card : %s ----- current roll : %s ----- score : %d").formatted(p2.getName(), p2.getFortuneCard(), Arrays.toString(p2.getCurrentRoll()) ,p2.getScore())
+        );
+
+        //player 3 move
+        for (int i=0; i<8; i++){               //roll die
+            die3[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++) {            //assign dies
+            if (i < 1) {
+                die3[i] = "skull";
+            }
+            if (i >= 1 && i < 8) {
+                die3[i] = "swords";
+            }
+        }
+        int player3_final_score = game.scoreForKindsAndChest(die3, p3) + game.scoreForDC(die3, p3);
+        p3.setScore(player3_final_score);
+        Assertions.assertEquals(0, p3.getScore());
+        p3.setCurrentRoll(die3);
+        printWriter.println(
+                ("Player3's information is following......" +
+                        "name : %s ----- card : %s ----- current roll : %s ----- score : %d").formatted(p3.getName(), p3.getFortuneCard(), Arrays.toString(p3.getCurrentRoll()) ,p3.getScore())
+        );
+
+        //player 1 move again
+        p1.setFortuneCard("captain");
+        game.setNewPlayer(p1);
+        for (int i=0; i<8; i++){               //roll die
+            die1[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++) {            //assign dies
+            die1[i] = "sword";
+        }
+        game.calculateScoreForARoundWithCapMonkey(p1, die1);
+        Assertions.assertEquals(9000, p1.getScore());
+        p1.setCurrentRoll(die1);
+        printWriter.println(
+                ("Round 2 Started"));
+        printWriter.println(
+                ("Player1's information is following......" +
+                        "name : %s ----- card : %s ----- current roll : %s ----- score : %d").formatted(p1.getName(), p1.getFortuneCard(), Arrays.toString(p1.getCurrentRoll()) ,p1.getScore())
+        );
+
+
+        Player winner = game.getWinner(player_list);
+        String winner_name = winner.getName();
+        assertEquals("name1", winner_name);
+        printWriter.println(
+                ("The winner is %s with %d points!!!").formatted(winner_name, winner.getScore())
+        );
+        printWriter.close();
+    }
+
 
 }
