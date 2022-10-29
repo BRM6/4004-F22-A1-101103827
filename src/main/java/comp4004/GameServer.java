@@ -314,4 +314,8 @@ public class GameServer extends Thread implements Serializable {
         }
 
     }
+    public static void main(String[] args) {
+        GameServer sr = new GameServer();
+        sr.run();
+    }
 }
