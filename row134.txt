@@ -1,0 +1,10 @@
+Round 1 Started
+Player1's information is following......name : name1 ----- card : captain ----- current roll : [sword, sword, sword, sword, sword, sword, sword, skull] ----- score : 4000
+Player2's information is following......name : name2 ----- card : coin ----- current roll : [skull, skull, skull, monkey, monkey, monkey, monkey, monkey] ----- score : 0
+Player3's information is following......name : name3 ----- card : captain ----- current roll : [skull, skull, skull, skull, skull, skull, parrots, parrots] ----- score : 0 Since player 3 was in skull island, he made a deduction -1200 points to other players.
+After Deduction..... Player 1 score is 2800  Player 2 score is 0  Player 3 score is 0 
+Round 2 Started
+Player1's information is following......name : name1 ----- card : coin ----- current roll : [monkey, monkey, monkey, monkey, parrots, parrots, parrots, parrots] ----- score : 3800
+Player2's information is following......name : name2 ----- card : captain ----- current roll : [skull, skull, skull, monkey, monkey, monkey, monkey, monkey] ----- score : 0
+Player3's information is following......name : name3 ----- card : 1 skull ----- current roll : [skull, skull, monkey, monkey, monkey, monkey, monkey, monkey] ----- score : 0
+The winner is name1 with 3800 points!!!
