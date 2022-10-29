@@ -37,11 +37,62 @@ public class GameServer extends Thread implements Serializable {
     }
 
     /////////
+    @Override
+    public void run(){
+        try{
+            acceptConnections();
+//            gameLoop();
+            ss.close();
+        } catch (ClassNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("FAILED TO CLOSE SERVER SOCKET");
+        }
+
+        System.out.println("CLOSING SERVER SOCKET");
+    }
+
+    public int deductPoint(int numOfSkull){
+        return numOfSkull*100;
+    }
 
 
 
 
 
+
+    synchronized public void acceptConnections() throws ClassNotFoundException {
+        try{
+            System.out.println("WAITING FOR PLAYERS TO JOIN...");
+            while (numOfPlayers < 3){
+                isAcceptingConnections = true;
+                Socket s = ss.accept();
+                numOfPlayers++;
+                System.out.println(numOfPlayers);
+
+                Server server = new Server(s, numOfPlayers);
+
+                //send player number
+                server.dOut.writeInt(server.playerId); //player id 1 2 3
+                server.dOut.flush();
+
+                //get player name
+                Player playerIn = (Player) server.dIn.readObject();
+                System.out.println("PLAYER " + playerIn.getName() + " HAS JOINED");
+                players[server.playerId -1] = playerIn;
+                playerServer[numOfPlayers - 1] = server;
+            }
+            System.out.println("THREE PLAYERS HAS JOINED NOW STARTING THE GAME!");
+
+            for (int i = 0; i < playerServer.length; i++) {
+                Thread t = new Thread(playerServer[i]);
+                t.start();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        isAcceptingConnections = false;
+    }
 
     //server class
     public class Server implements Runnable {
