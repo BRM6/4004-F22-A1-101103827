@@ -1,0 +1,5 @@
+Round 1 Started
+Player1's information is following......name : name1 ----- card : coin ----- current roll : [sword, sword, sword, sword, sword, sword, skull, skull] ----- score : 1100
+Player2's information is following......name : name2 ----- card : not sorceress ----- final current roll : [parrots, skull, skull, skull, skull, skull, skull, coin] ( before use sorceress card is [skull, skull, skull, skull, skull, skull, skull, skull] ) ----- score : 0 Since player 2 was in skull island, he made a deduction -800 points to other players.
+After Deduction..... Player 1 score is 300  Player 2 score is 0  Player 3 score is 0 
+The winner is name1 with 300 points!!!

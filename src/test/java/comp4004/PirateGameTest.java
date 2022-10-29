@@ -2162,5 +2162,112 @@ class PirateGameTest {
         printWriter.close();
     }
 
+    @Test
+    @DisplayName("test row 147")
+    void testRow147() throws FileNotFoundException {
+        PrintWriter printWriter = new PrintWriter("row147.txt");
+        //init players
+        scannerInput("1");
+        game = new PirateGame();
+        Player p1 = new Player("name1");
+        game.drawForturnCard(p1);
+        p1.setFortuneCard("coin");
+        game.setNewPlayer(p1);
+        String[] die1 = new String[8];
+
+
+        Player p2 = new Player("name2");
+        scannerInput("1");
+        scannerInput("1");
+        game.drawForturnCard(p2);
+        p2.setFortuneCard("sorceress");
+        game.setNewPlayer(p2);
+        PirateGame game2 = new PirateGame();
+        game2.setNewPlayer(p2);
+        String[] die2 = new String[8];
+
+        Player p3 = new Player("name3");
+        game.drawForturnCard(p3);
+        p3.setFortuneCard("2 skull");
+        game.setNewPlayer(p3);
+        String[] die3 = new String[8];
+
+        Player[] player_list = new Player[3];
+        player_list[0] = p1;
+        player_list[1] = p2;
+        player_list[2] = p3;
+
+        //player 1 move
+        for (int i=0; i<8; i++){               //roll die
+            die1[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++) {            //assign dies
+            if (i < 6) {
+                die1[i] = "sword";
+            }
+            if (i >= 6 && i < 8) {
+                die1[i] = "skull";
+            }
+        }
+        int player1_final_score = game.scoreForKindsAndChest(die1, p1) + game.scoreForDC(die1, p1);
+        p1.setScore(player1_final_score);
+        Assertions.assertEquals(1100, p1.getScore());
+        p1.setCurrentRoll(die1);
+        printWriter.println(
+                ("Round 1 Started"));
+        printWriter.println(
+                ("Player1's information is following......" +
+                        "name : %s ----- card : %s ----- current roll : %s ----- score : %d").formatted(p1.getName(), p1.getFortuneCard(), Arrays.toString(p1.getCurrentRoll()) ,p1.getScore())
+        );
+
+        //player 2 move
+        for (int i=0; i<8; i++){               //roll die
+            die2[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++) {            //assign dies
+            if (i < 7) {
+                die2[i] = "skull";
+            }
+            if (i >= 7 && i < 8) {
+                die2[i] = "coin";
+            }
+        }
+        String[] beforeSorceress = die2;
+        String[] afterSorceress = game.useSorceress(die2, p2);;
+        String[] hold = {"1", "2", "3", "4", "5", "6"}; //select dice to hold
+        die2 = game.RerollWithHold(die2, hold); //reroll
+        //assign dice
+        die2[0] = "skull";
+        die2[7] = "skull";
+
+        int player2NumOfSkull = game2.rerollSkullLandAndCountNOSkull(die2, p2);
+        int player2Deduct = player2NumOfSkull * 100;
+        p1.setScore(p1.getScore() + player2Deduct);
+        p2.setScore(p2.getScore());
+        p3.setScore(p3.getScore() + player2Deduct);
+        Assertions.assertEquals(0, p2.getScore());
+        Assertions.assertEquals(0, p3.getScore());
+        p3.setCurrentRoll(die3);
+        printWriter.println(
+                ("Player2's information is following......" +
+                        "name : %s ----- card : %s ----- final current roll : %s ( before use sorceress card is %s ) ----- score : %d" +
+                        " Since player 2 was in skull island, he made a deduction %s points to other players.").formatted(p2.getName(), p2.getFortuneCard(), Arrays.toString(afterSorceress), Arrays.toString(beforeSorceress) ,p2.getScore(), player2Deduct)
+        );
+        printWriter.println(
+                ("After Deduction....." +
+                        " Player 1 score is %d " +
+                        " Player 2 score is %d " +
+                        " Player 3 score is %d ").formatted(p1.getScore(), p2.getScore(), p3.getScore())
+        );
+
+
+        Player winner = game.getWinner(player_list);
+        String winner_name = winner.getName();
+        assertEquals("name1", winner_name);
+        printWriter.println(
+                ("The winner is %s with %d points!!!").formatted(winner_name, winner.getScore())
+        );
+        printWriter.close();
+    }
 
 }
