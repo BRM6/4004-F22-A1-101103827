@@ -646,7 +646,7 @@ public class PirateGame implements Serializable {
                 //ask player to select dice
                 System.out.println("Player fortune card is : " + player.getFortuneCard() + " player current roll is : " + Arrays.toString(current_roll));
                 System.out.println("Select the index of dice which you want to put into chest (from 0 - 7), separate by one comma");
-                String[] diceToChest = scanner.next().replaceAll("\\s", "").split(",");
+                String[] diceToChest = scanner.nextLine().replaceAll("\\s", "").split(",");
 
                 //putting selected dice into chest
                 System.out.println("Player want to put these dice in chest" + Arrays.toString(diceToChest));
@@ -657,7 +657,7 @@ public class PirateGame implements Serializable {
 
                 //player hold dice
                 System.out.println("Select the dice you want to hold, separate by one comma");
-                String[] input = scanner.next().replaceAll("\\s", "").split(",");
+                String[] input = scanner.nextLine().replaceAll("\\s", "").split(",");
                 System.out.println("Player want to hold these dice (did not put into chest) : ");
                 System.out.println(input);
 
