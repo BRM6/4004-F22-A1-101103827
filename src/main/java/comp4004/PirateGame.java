@@ -16,6 +16,7 @@ public class PirateGame implements Serializable {
     public Player player;
     private Player[] players;
     private int playerId = 0;
+    public boolean isGoing;
     public String[] current_roll = new String[8];
     public String[] holding_roll = new String[8];
     private Scanner scanner = new Scanner(System.in);
@@ -118,6 +119,7 @@ public class PirateGame implements Serializable {
     public int scoreForDC(String[] r, Player player){
         boolean isDie = checkIfDie(r, player);
         if (isDie){
+            System.out.println("PLAYER DIE, END OF TURN");
             return 0;
         }
         int player_score = 0;
@@ -138,6 +140,7 @@ public class PirateGame implements Serializable {
     public int scoreForKindsAndChest(String[] r, Player player){
         boolean isDie = checkIfDie(r, player);
         if (isDie){
+            System.out.println("PLAYER DIE, END OF TURN");
             return 0;
         }
         int scoreKind = 0;
@@ -549,7 +552,7 @@ public class PirateGame implements Serializable {
     public int playARound(Player player){ //actual game loop with game logic
         //init some values
         int numOfSkull = 0;
-        boolean isGoing = true;
+        isGoing = true;
         player.emptyHoldingDie();
 
         // first time roll all dice for player
@@ -674,6 +677,7 @@ public class PirateGame implements Serializable {
                 //check is dead
                 if (rollState){
                     isGoing = false;
+                    System.out.println("PLAYER DIE, END OF TURN");
                     scoreChest(player, current_roll);
                 }
             }
