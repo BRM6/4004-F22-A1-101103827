@@ -84,4 +84,41 @@ public class playerGetScoreCases {
     public void playerFinishedTheRoundForPlayerGetScore() {
         assertFalse(game.isGoing);
     }
+
+    //row 52
+    @When("Player gets captain as FC for player get score")
+    public void playerGetsCaptainAsFCForPlayerGetScore() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("captain");
+    }
+
+    @And("Player roll dice and get two monkey two parrot two diamond two coin")
+    public void playerRollDiceAndGetTwoMonkeyTwoParrotTwoDiamondTwoCoin() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<2){
+                current[i] = "monkey";
+            }
+            if (i>=2 && i<4){
+                current[i] = "parrots";
+            }
+            if (i>=4 && i<6){
+                current[i] = "diamond";
+            }
+            if (i>=6){
+                current[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @Then("Player score {int} with captain card")
+    public void playerScoreWithCaptainCard(int arg0) {
+        game.calculateScoreForARoundWithCapMonkey(game.player, player.getCurrentRoll());
+        int final_score = player.getScore();
+        assertEquals(arg0, final_score);
+    }
 }

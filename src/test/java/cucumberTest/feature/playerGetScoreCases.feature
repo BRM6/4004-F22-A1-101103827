@@ -13,3 +13,10 @@ Feature: Player get a score number after all the movements
     And Player reroll three sword and get three coin
     Then Player score 4800
     And Player finished the round for player get score
+
+  @Row52
+  Scenario: score first roll with 2 (monkeys/parrot/diamonds/coins) and FC is captain (SC 800)
+    When Player gets captain as FC for player get score
+    And Player roll dice and get two monkey two parrot two diamond two coin
+    Then Player score 800 with captain card
+    And Player finished the round for player get score
