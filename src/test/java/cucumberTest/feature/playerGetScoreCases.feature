@@ -56,4 +56,11 @@ Feature: Player get a score number after all the movements
     And Player roll dice and get three sword four parrots one skull
     Then Player score 400
     And Player finished the round for player get score
-    
+
+  @Row58
+  Scenario: roll 1 skull, 2 coins/parrots & 3 swords, reroll parrots, get 1 coin and 1 sword, score (SC = 200+400+200 = 800)
+    When Player gets coin as FC for player get score
+    And Player roll dice and get one skull two coin two parrot three sword
+    And Player reroll two parrot and get one coin one sword
+    Then Player score 800
+    And Player finished the round for player get score
