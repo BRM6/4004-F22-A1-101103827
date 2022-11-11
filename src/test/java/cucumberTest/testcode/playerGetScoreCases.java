@@ -202,4 +202,31 @@ public class playerGetScoreCases {
         }
         game.player.setCurrentRoll(current);
     }
+
+    //row 56
+    @When("Player gets diamond as FC for player get score")
+    public void playerGetsDiamondAsFCForPlayerGetScore() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("diamond");
+    }
+
+    @And("Player roll dice and get four coin two skull two sword")
+    public void playerRollDiceAndGetFourCoinTwoSkullTwoSword() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<4){
+                current[i] = "coin";
+            }
+            if (i>=4 && i<6){
+                current[i] = "skull";
+            }
+            if (i>=6){
+                current[i] = "sword";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
 }

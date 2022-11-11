@@ -42,3 +42,10 @@ Feature: Player get a score number after all the movements
     And Player roll dice and get three diamond two skull one monkey one sword one parrot
     Then Player score 500
     And Player finished the round for player get score
+
+  @Row56
+  Scenario: roll 4 coins, 2 skulls, 2 swords and score (coins: 200 + 400 points) with FC is a diamond (SC 700)
+    When Player gets diamond as FC for player get score
+    And Player roll dice and get four coin two skull two sword
+    Then Player score 700
+    And Player finished the round for player get score
