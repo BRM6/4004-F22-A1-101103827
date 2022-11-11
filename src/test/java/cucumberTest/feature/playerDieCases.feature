@@ -1,5 +1,5 @@
 Feature: Player die after got 3 skulls
-  die with 3 skulls 5 swords on first roll: player gets a score of 0
+  Player will die eventually with 3 skulls at the end of the scenario
 
   Background:
     Given Game has started
