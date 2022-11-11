@@ -30,3 +30,13 @@ Feature: Player die after got 3 skulls
     Then Player die
     Then Player finished the round
     And Player scored zero
+
+  @Row48
+  Scenario: roll 1 skull, 4 parrots, 3 swords, reroll swords, get 1 skull 2 monkeys and reroll 2 monkeys, get 1 skull 1 monkey and die
+    When Player gets coin as FC
+    And Player roll dice and get one skull four parrots three sword
+    And Player reroll three swords and get one skull two monkey
+    And Player reroll two monkey and get one skull one monkey
+    Then Player die
+    Then Player finished the round
+    And Player scored zero

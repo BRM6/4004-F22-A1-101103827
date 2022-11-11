@@ -110,4 +110,24 @@ public class playerDieCases {
         newCurrent[7] = "sword";
         game.player.setCurrentRoll(newCurrent);
     }
+
+    //row 48
+    @And("Player reroll three swords and get one skull two monkey")
+    public void playerRerollThreeSwordsAndGetOneSkullTwoMonkey() {
+        String[] hold = new String[] {"1", "2", "3", "4"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[5] = "skull";
+        newCurrent[6] = "monkey";
+        newCurrent[7] = "monkey";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @And("Player reroll two monkey and get one skull one monkey")
+    public void playerRerollTwoMonkeyAndGetOneSkullOneMonkey() {
+        String[] hold = new String[] {"1", "2", "3", "4"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[6] = "skull";
+        newCurrent[7] = "monkey";
+        game.player.setCurrentRoll(newCurrent);
+    }
 }
