@@ -109,3 +109,10 @@ Feature: Player get a score number after all the movements
     And Player roll dice and get eight coin
     Then Player score 5400
     And Player finished the round for player get score
+
+  @Row66
+  Scenario: score set of 8 swords on first roll and FC is captain (SC 4500x2 = 9000) since full chest
+    When Player gets captain as FC for player get score
+    And Player roll dice and get eight sword
+    Then Player score 9000 with captain card
+    And Player finished the round for player get score

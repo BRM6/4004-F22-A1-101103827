@@ -374,4 +374,17 @@ public class playerGetScoreCases {
         }
         game.player.setCurrentRoll(current);
     }
+
+    //row 66
+    @And("Player roll dice and get eight sword")
+    public void playerRollDiceAndGetEightSword() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            current[i] = "sword";
+        }
+        game.player.setCurrentRoll(current);
+    }
 }
