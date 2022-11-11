@@ -64,3 +64,11 @@ Feature: Player get a score number after all the movements
     And Player reroll two parrot and get one coin one sword
     Then Player score 800
     And Player finished the round for player get score
+
+  @Row59
+  Scenario: same as previous row but with captain fortune card  (SC = (100 + 300 + 200)*2 = 1200
+    When Player gets captain as FC for player get score
+    And Player roll dice and get one skull two coin two parrot three sword
+    And Player reroll two parrot and get one coin one sword
+    Then Player score 1200 with captain card
+    And Player finished the round for player get score
