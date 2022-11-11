@@ -156,3 +156,10 @@ Feature: Player get a score number after all the movements
     And Player reroll three swordand get one coin one monkey one parrot
     Then Player score 500
     And Player finished the round for player get score
+
+  @Row72
+  Scenario: get 4 monkeys, 2 coins and 2 skulls with FC coin. Score 600
+    When Player gets coin as FC for player get score
+    And Player roll dice and get four monkey two coin two skull
+    Then Player score 600
+    And Player finished the round for player get score
