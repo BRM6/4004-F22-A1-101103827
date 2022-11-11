@@ -72,3 +72,12 @@ Feature: Player get a score number after all the movements
     And Player reroll two parrot and get one coin one sword
     Then Player score 1200 with captain card
     And Player finished the round for player get score
+
+  @Row60
+  Scenario: roll 1 skull, 2 (monkeys/parrots) 3 swords, reroll 2 monkeys, get 1 skull 1 sword, then reroll parrots get 1 sword 1 monkey (SC 600)
+    When Player gets coin as FC for player get score
+    And Player roll dice and get one skull two monkey two parrot three sword
+    And Player reroll two monkey and get one skull one sword
+    And Player reroll two parrots and get one sword and one monkey second version
+    Then Player score 600
+    And Player finished the round for player get score
