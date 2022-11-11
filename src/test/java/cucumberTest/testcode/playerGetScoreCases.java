@@ -175,4 +175,31 @@ public class playerGetScoreCases {
         }
         game.player.setCurrentRoll(current);
     }
+
+    //row 55
+    @And("Player roll dice and get three diamond two skull one monkey one sword one parrot")
+    public void playerRollDiceAndGetThreeDiamondTwoSkullOneMonkeyOneSwordOneParrot() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<3){
+                current[i] = "diamond";
+            }
+            if (i>=3 && i<5){
+                current[i] = "skull";
+            }
+            if (i>=5 && i<6){
+                current[i] = "monkey";
+            }
+            if (i>=6 && i<7){
+                current[i] = "sword";
+            }
+            if (i>=7 && i<8){
+                current[i] = "parrots";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
 }
