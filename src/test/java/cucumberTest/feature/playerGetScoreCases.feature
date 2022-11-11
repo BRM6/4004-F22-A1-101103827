@@ -95,3 +95,10 @@ Feature: Player get a score number after all the movements
     And Player roll dice and get seven parrot one skull
     Then Player score 2100
     And Player finished the round for player get score
+
+  @Row64
+  Scenario: score set of 8 coins on first roll (SC 5400)  seq of 8 + 9 coins(FC is coin) +  full chest  (no extra points for 9 coins)
+    When Player gets coin as FC for player get score
+    And Player roll dice and get eight coin
+    Then Player score 5400
+    And Player finished the round for player get score
