@@ -1,0 +1,87 @@
+package cucumberTest.testcode;
+
+import comp4004.PirateGame;
+import comp4004.Player;
+import static org.junit.jupiter.api.Assertions.*;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class playerGetScoreCases {
+    private PirateGame game;
+    private Player player;
+
+    //background
+    @Given("Game has started for player get score")
+    public void gameHasStartedForPlayerGetScore() {
+        game = new PirateGame();
+    }
+
+    @And("Player with name {string} is playing the game for player get score")
+    public void playerWithNameIsPlayingTheGameForPlayerGetScore(String arg0) {
+        player = new Player(arg0);
+        game.setNewPlayer(player);
+    }
+
+    //row 50
+    @When("Player gets coin as FC for player get score")
+    public void playerGetsCoinAsFCForPlayerGetScore() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("coin");
+    }
+
+    @And("Player roll dice and get one skull two parrots three sword two coin")
+    public void playerRollDiceAndGetOneSkullTwoParrotsThreeSwordTwoCoin() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<1){
+                current[i] = "skull";
+            }
+            if (i>=1 && i<3){
+                current[i] = "parrots";
+            }
+            if (i>=3 && i<6){
+                current[i] = "sword";
+            }
+            if (i>=6){
+                current[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player reroll two parrots and get two coin")
+    public void playerRerollTwoParrotsAndGetTwoCoin() {
+        String[] hold = new String[] {"3", "4", "5", "6", "7"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[1] = "coin";
+        newCurrent[2] = "coin";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @And("Player reroll three sword and get three coin")
+    public void playerRerollThreeSwordAndGetThreeCoin() {
+        String[] hold = new String[] {"1", "2", "6", "7"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[3] = "coin";
+        newCurrent[4] = "coin";
+        newCurrent[5] = "coin";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @Then("Player score {int}")
+    public void playerScore(int arg0) {
+        int final_score = game.scoreForKindsAndChest(game.player.getCurrentRoll(), game.player) + game.scoreForDC(game.player.getCurrentRoll(), game.player);
+        game.player.setScore(final_score);
+        assertEquals(arg0, game.player.getScore());
+    }
+
+    @And("Player finished the round for player get score")
+    public void playerFinishedTheRoundForPlayerGetScore() {
+        assertFalse(game.isGoing);
+    }
+}

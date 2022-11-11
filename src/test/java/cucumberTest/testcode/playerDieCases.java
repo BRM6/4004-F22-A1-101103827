@@ -12,13 +12,13 @@ public class playerDieCases {
     private PirateGame game;
     private Player player;
 
-    //row 45
+    //background
     @Given("Game has started")
     public void gameHasStarted() {
         game = new PirateGame();
     }
 
-    @When("Player with name {string} is playing the game")
+    @And("Player with name {string} is playing the game")
     public void playerWithNameIsPlayingTheGame(String arg0) {
         player = new Player(arg0);
         game.setNewPlayer(player);
@@ -26,10 +26,12 @@ public class playerDieCases {
 
     @And("Player gets coin as FC")
     public void playerGetsCoinAsFC() {
+        game.drawForturnCard(game.player);
         game.player.setFortuneCard("coin");
     }
 
-    @And("Player roll dice and get three skulls and five swords")
+    //row 45
+    @When("Player roll dice and get three skulls and five swords")
     public void playerRollDiceAndGetSkullsAndFiveSwords() {
         String[] current = {"skull", "skull", "skull", "sword", "sword", "sword", "sword", "sword"};
         game.player.setCurrentRoll(current);
@@ -51,7 +53,7 @@ public class playerDieCases {
     }
 
     //row46
-    @And("Player roll dice and get one skull four parrots three sword")
+    @When("Player roll dice and get one skull four parrots three sword")
     public void playerRollDiceAndGetOneSkullFourParrotsThreeSword() {
         String[] current = new String[8];
         for (int i=0; i<8; i++){               //roll die
@@ -82,7 +84,7 @@ public class playerDieCases {
     }
 
     //row 47
-    @And("Player roll dice and get two skull four parrots two sword")
+    @When("Player roll dice and get two skull four parrots two sword")
     public void playerRollDiceAndGetTwoSkullFourParrotsTwoSword() {
         String[] current = new String[8];
         for (int i=0; i<8; i++){               //roll die
