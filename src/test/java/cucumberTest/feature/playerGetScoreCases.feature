@@ -28,3 +28,10 @@ Feature: Player get a score number after all the movements
     And Player reroll two parrots and get one sword and one monkey
     Then Player score 300
     And Player finished the round for player get score
+
+  @Row54
+  Scenario: roll 3 (monkey, swords) + 2 skulls and score   (SC 300)
+    When Player gets coin as FC for player get score
+    And Player roll dice and get three monkey three sword two skull
+    Then Player score 300
+    And Player finished the round for player get score
