@@ -343,4 +343,22 @@ public class playerGetScoreCases {
         }
         game.player.setCurrentRoll(current);
     }
+
+    //row 63
+    @And("Player roll dice and get seven parrot one skull")
+    public void playerRollDiceAndGetSevenParrotOneSkull() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<7){
+                current[i] = "parrots";
+            }
+            if (i>=7){
+                current[i] = "skull";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
 }
