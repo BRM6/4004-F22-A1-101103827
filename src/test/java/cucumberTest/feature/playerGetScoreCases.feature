@@ -116,3 +116,11 @@ Feature: Player get a score number after all the movements
     And Player roll dice and get eight sword
     Then Player score 9000 with captain card
     And Player finished the round for player get score
+
+  @Row67
+  Scenario: roll 6 monkeys and 2 swords, reroll swords, get 2 monkeys, score (SC 4600 because of FC is coin and full chest)
+    When Player gets coin as FC for player get score
+    And Player roll dice and get six monkey two sword
+    And Player reroll two sword and get two monkey
+    Then Player score 4600
+    And Player finished the round for player get score
