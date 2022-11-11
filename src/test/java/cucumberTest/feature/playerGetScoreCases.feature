@@ -102,3 +102,10 @@ Feature: Player get a score number after all the movements
     And Player roll dice and get eight coin
     Then Player score 5400
     And Player finished the round for player get score
+
+  @Row65
+  Scenario: score set of 8 coins on first roll and FC is diamond (SC 5400)
+    When Player gets diamond as FC for player get score
+    And Player roll dice and get eight coin
+    Then Player score 5400
+    And Player finished the round for player get score
