@@ -81,3 +81,10 @@ Feature: Player get a score number after all the movements
     And Player reroll two parrots and get one sword and one monkey second version
     Then Player score 600
     And Player finished the round for player get score
+
+  @Row62
+  Scenario: score set of 6 monkeys and 2 skulls on first roll (SC 1100)
+    When Player gets coin as FC for player get score
+    And Player roll dice and get six monkey two skull
+    Then Player score 1100
+    And Player finished the round for player get score
