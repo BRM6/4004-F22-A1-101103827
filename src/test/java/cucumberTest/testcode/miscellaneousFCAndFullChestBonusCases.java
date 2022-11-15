@@ -792,7 +792,6 @@ public class miscellaneousFCAndFullChestBonusCases {
         game.player.setCurrentRoll(current);
     }
 
-
     @Then("Player die and score {int}")
     public void playerDieAndScore(int arg0) {
         boolean final_state = game.checkIfDie(game.player.getCurrentRoll(), game.player);
@@ -800,5 +799,43 @@ public class miscellaneousFCAndFullChestBonusCases {
         game.seaBattle(game.player, game.player.getCurrentRoll());
         int final_score = game.player.getScore();
         assertEquals(arg0, final_score);
+    }
+
+    //row 115
+    @When("Player gets three sword sea battle as FC for player get score with full chest")
+    public void playerGetsThreeSwordSeaBattleAsFCForPlayerGetScoreWithFullChest() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("3 sword");
+    }
+
+    @And("Player roll dice and get two sword two skull four parrots")
+    public void playerRollDiceAndGetTwoSwordTwoSkullFourParrots() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 2) {
+                current[i] = "sword";
+            }
+            if (i >= 2 && i < 4) {
+                current[i] = "skull";
+            }
+            if (i >= 4 && i < 8) {
+                current[i] = "parrots";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player reroll four parrots get four skull")
+    public void playerRerollFourParrotsGetFourSkull() {
+        String[] hold = new String[]{"0", "1", "2", "3"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[4] = "skull";
+        newCurrent[5] = "skull";
+        newCurrent[6] = "skull";
+        newCurrent[7] = "skull";
+        game.player.setCurrentRoll(newCurrent);
     }
 }
