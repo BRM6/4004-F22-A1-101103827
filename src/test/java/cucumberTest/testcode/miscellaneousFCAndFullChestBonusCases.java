@@ -87,4 +87,103 @@ public class miscellaneousFCAndFullChestBonusCases {
     public void playerCardIsNotSorceress() {
         assertNotEquals("not sorceress", game.player.getFortuneCard());
     }
+
+    @And("Player finished the round for miscellaneous")
+    public void playerFinishedTheRoundForMiscellaneous() {
+        assertFalse(game.isGoing);
+    }
+
+    //row 82
+    @When("Player gets monkey business as FC for player get score")
+    public void playerGetsMonkeyBusinessAsFCForPlayerGetScore() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("monkey business");
+
+    }
+
+    @And("Player roll dice and get three monkey three parrots one skull one coin")
+    public void playerRollDiceAndGetThreeMonkeyThreeParrotsOneSkullOneCoin() {
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<3){
+                die[i] = "monkey";
+            }
+            if (i>=3 && i<6){
+                die[i] = "parrots";
+            }
+            if (i>=6 && i<7){
+                die[i] = "skull";
+            }
+            if (i>=7 && i<8){
+                die[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(die);
+    }
+
+    @Then("Player score {int} with monkey business")
+    public void playerScoreWithMonkeyBusiness(int arg0) {
+        game.calculateScoreForARoundWithCapMonkey(game.player, game.player.getCurrentRoll());
+        assertEquals(arg0, game.player.getScore());
+    }
+
+    //row 83
+    @And("Player roll dice and get two monkey two sword two parrots two coin")
+    public void playerRollDiceAndGetTwoMonkeyTwoSwordTwoParrotsTwoCoin() {
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<2){
+                die[i] = "monkey";
+            }
+            if (i>=2 && i<4){
+                die[i] = "sword";
+            }
+            if (i>=4 && i<6){
+                die[i] = "parrots";
+            }
+            if (i>=6 && i<8){
+                die[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(die);
+    }
+
+    @And("Player reroll two sword and get one monkey one parrots")
+    public void playerRerollTwoSwordAndGetOneMonkeyOneParrots() {
+        String[] hold = {"0", "1", "5", "6", "4", "7"}; //select dice to hold
+        String[] newDie = game.RerollWithHold(game.player.getCurrentRoll(), hold); //reroll
+        newDie[2] = "monkey";
+        newDie[3] = "parrots";
+        game.player.setCurrentRoll(newDie);
+    }
+
+    //row 84
+    @And("Player roll dice and get three skull three monkey two parrots")
+    public void playerRollDiceAndGetThreeSkullThreeMonkeyTwoParrots() {
+        String[] die = new String[8];
+
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<3){
+                die[i] = "skull";
+            }
+            if (i>=3 && i<6){
+                die[i] = "monkey";
+            }
+            if (i>=6 && i<8){
+                die[i] = "parrots";
+            }
+        }
+        game.player.setCurrentRoll(die);
+    }
 }
