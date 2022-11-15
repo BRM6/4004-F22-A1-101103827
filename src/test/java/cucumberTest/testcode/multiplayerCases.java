@@ -340,4 +340,81 @@ public class multiplayerCases {
         int player3_final_score = game3.scoreForKindsAndChest(current3, game3.player) + game3.scoreForDC(current3, game3.player);
         assertEquals(arg0, player3_final_score);
     }
+
+    //row 142
+    @And("Player one roll dice and get three skull five monkey get {int} score")
+    public void playerOneRollDiceAndGetThreeSkullFiveMonkeyGetScore(int arg0) {
+        String[] current1 = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current1[i] = game1.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 3) {
+                current1[i] = "skull";
+            }
+            if (i >= 3 && i < 8) {
+                current1[i] = "monkey";
+            }
+        }
+        game1.calculateScoreForARoundWithCapMonkey(game1.player, current1);  //player1_final_score = p1.getScore()
+        Assertions.assertEquals(arg0, game1.player.getScore());
+        game1.player.setCurrentRoll(current1);
+    }
+
+    @And("Player two roll dice and get seven sword one skull get {int} score")
+    public void playerTwoRollDiceAndGetSevenSwordOneSkullGetScore(int arg0) {
+        String[] current2 = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current2[i] = game2.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 7) {
+                current2[i] = "sword";
+            }
+            if (i >= 7 && i < 8) {
+                current2[i] = "skull";
+            }
+        }
+        game2.calculateScoreForARoundWithCapMonkey(game2.player, current2);
+        Assertions.assertEquals(arg0, game2.player.getScore());
+        game2.player.setCurrentRoll(current2);
+    }
+
+    @And("Player three gets two skull as FC for multiplayer")
+    public void playerThreeGetsTwoSkullAsFCForMultiplayer() {
+        game3.drawForturnCard(player);
+        game3.player.setFortuneCard("2 skull");
+    }
+
+    @And("Player three roll dice and one skull seven sword get {int} score")
+    public void playerThreeRollDiceAndOneSkullSevenSwordGetScore(int arg0) {
+        String[] current3 = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current3[i] = game3.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 1) {
+                current3[i] = "skull";
+            }
+            if (i >= 1 && i < 8) {
+                current3[i] = "swords";
+            }
+        }
+        int player3_final_score = game3.scoreForKindsAndChest(current3, game3.player) + game3.scoreForDC(current3, game3.player);
+        assertEquals(arg0, player3_final_score);
+    }
+
+    @And("Player one roll dice and get eight sword get {int} score")
+    public void playerOneRollDiceAndGetEightSwordGetScore(int arg0) {
+        String[] current1 = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current1[i] = game1.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            current1[i] = "sword";
+        }
+        game1.calculateScoreForARoundWithCapMonkey(game1.player, current1);  //player1_final_score = p1.getScore()
+        Assertions.assertEquals(arg0, game1.player.getScore());
+        game1.player.setCurrentRoll(current1);
+    }
 }

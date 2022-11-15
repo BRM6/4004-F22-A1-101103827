@@ -40,3 +40,17 @@ Feature: the following test cases are multiplayer test cases
     And Player three roll dice and two skull six monkey get 0 score
     Then Winner is "p1"
     And Players finished the round
+
+  @Row142
+  Scenario: multiplayer cases three
+    When Player one gets captain as FC for multiplayer
+    And Player one roll dice and get three skull five monkey get 0 score
+    And Player two gets captain as FC for multiplayer
+    And Player two roll dice and get seven sword one skull get 4000 score
+    And Player three gets two skull as FC for multiplayer
+    And Player three roll dice and one skull seven sword get 0 score
+    And Player one gets captain as FC for multiplayer
+    And Player one roll dice and get eight sword get 9000 score
+    And Player one current score 9000
+    Then Winner is "p1"
+    And Players finished the round
