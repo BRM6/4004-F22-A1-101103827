@@ -96,3 +96,10 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player roll dice and get three monkey three sword two coin
     Then Player score 1800 with full chest with captain
     And Player finished the round for miscellaneous
+
+  @Row99
+  Scenario: 3 monkeys, 4 swords, 1 diamond, FC: coin   => SC 1000  (ie 100++200+100+100+bonus)
+    When Player gets coin as FC for player get score with full chest
+    And Player roll dice and get three monkey four sword two coin
+    Then Player score 1000 with full chest
+    And Player finished the round for miscellaneous
