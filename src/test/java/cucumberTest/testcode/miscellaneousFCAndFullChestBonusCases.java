@@ -510,4 +510,50 @@ public class miscellaneousFCAndFullChestBonusCases {
         }
         game.player.setCurrentRoll(current);
     }
+
+    //row 100
+    @When("Player gets two sword sea battle as FC for player get score with full chest")
+    public void playerGetsTwoSwordSeaBattleAsFCForPlayerGetScoreWithFullChest() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("2 sword");
+    }
+
+    @And("Player roll dice and get four monkey one sword two parrots one coin")
+    public void playerRollDiceAndGetFourMonkeyOneSwordTwoParrotsOneCoin() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<4){
+                current[i] = "monkey";
+            }
+            if (i>=4 && i<5){
+                current[i] = "sword";
+            }
+            if (i>=5 && i<7){
+                current[i] = "parrots";
+            }
+            if (i>=7 && i<8){
+                current[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player reroll two parrots and get one coin and one sword")
+    public void playerRerollTwoParrotsAndGetOneCoinAndOneSword() {
+        String[] hold = {"0", "1", "2", "3", "4", "7"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[5] = "coin";
+        newCurrent[6] = "sword";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @Then("Player score {int} with sea battle with full chest")
+    public void playerScoreWithSeaBattleWithFullChest(int arg0) {
+        game.seaBattle(game.player, game.player.getCurrentRoll());
+        int final_score = game.player.getScore();
+        assertEquals(1200, final_score);
+    }
 }

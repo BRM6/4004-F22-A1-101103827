@@ -103,3 +103,11 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player roll dice and get three monkey four sword two coin
     Then Player score 1000 with full chest
     And Player finished the round for miscellaneous
+
+  @Row100
+  Scenario: full chest scenario one
+    When Player gets two sword sea battle as FC for player get score with full chest
+    And Player roll dice and get four monkey one sword two parrots one coin
+    And Player reroll two parrots and get one coin and one sword
+    Then Player score 1200 with sea battle with full chest
+    And Player finished the round for miscellaneous
