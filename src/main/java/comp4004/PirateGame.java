@@ -27,7 +27,7 @@ public class PirateGame implements Serializable {
     public void emptyCurrentRoll(){current_roll = new String[8];}
     public void emptyHoldingRoll(){holding_roll = new String[8];}
 
-    ////////////////////////////////
+
     public Player getWinner(Player[] pl) {
         Player winner = pl[0];
         for (int i=0; i<pl.length; i++){
@@ -55,9 +55,11 @@ public class PirateGame implements Serializable {
         }
 
         if (count == 3){
+            System.out.println("You are dead!!!");
             return true;
         }
         if ( (player.getFortuneCard() == "2 sword" || player.getFortuneCard() == "3 sword" || player.getFortuneCard() == "4 sword") && count >= 3){
+            System.out.println("You are dead!!!");
             return true;
         }
         return false;
@@ -524,8 +526,9 @@ public class PirateGame implements Serializable {
                 }
                 break;
             }
-
-            System.out.println("******************Round " + round + "********");
+            System.out.println();
+            System.out.println();
+            System.out.println("******************Round " + round + " Scoreboard" + "********");
             for (int i = 0; i < 3; i++){
                 //set final score for each player
                 players[i].setScore(pl[i]);
@@ -535,6 +538,9 @@ public class PirateGame implements Serializable {
             printPlayerScore(players);
             drawForturnCard(player);
             player.setHoldingDie(player.emptyHoldingDie()); //empty player holding die from previous round
+            System.out.println();
+            System.out.println("Is your turn now!!!!!!");
+            System.out.println();
             clientConnection.sendScore(playARound(player)); //player play a round and then send player score to server
             player.nextRound();
         }
@@ -567,7 +573,6 @@ public class PirateGame implements Serializable {
         boolean rollState = checkIfDie(current_roll, player);//ask roll state
         if (rollState){
             isGoing = false;
-            System.out.println("PLAYER DIE, END OF TURN");
         }
 
         // game loop, all the game steps
@@ -576,7 +581,7 @@ public class PirateGame implements Serializable {
             if (isSkullLand(current_roll)){ //if its skull island
                 isGoing = false;
                 numOfSkull = rerollSkullLandAndCountNOSkull(current_roll, player);
-                System.out.println("Player has " + numOfSkull + " skulls in total");
+                System.out.println("Player went to the skull island and collected  " + numOfSkull + " skulls in total");
                 break; // return # of skull in negative number
             }
 
@@ -586,21 +591,20 @@ public class PirateGame implements Serializable {
 
             //if player choose to hold dice and re-roll others
             if (player_selection == 1){                                                             // selection 1
-                System.out.println("Select the dice index you want to hold (from 0 to 7),separate by one comma; Enter anynumber that greater than 7 will roll all dice except for skull");
+                System.out.println("Select the dice index you want to hold (from 0 to 7),separate by one comma; Enter any number that greater than 7 will roll all dice except for skull");
                 String input = scanner.nextLine();
 
                 // checking if player input is not between 0-7
                 if (input.matches("-?\\d+") && (Integer.parseInt(input) > 8 || 0 < Integer.parseInt(input))){
-                    System.out.println("Before re-roll, roll is : " + Arrays.toString(current_roll));
+//                    System.out.println("Before re-roll, roll is : " + Arrays.toString(current_roll));
                     current_roll = reRollWithoutHold(current_roll);
                     System.out.println("After re-roll without hold, new roll is : " + Arrays.toString(current_roll));
 
                 }else{
                     holding_roll = input.replaceAll("\\s", "").split(",");
                     System.out.println("Player want to hold these dice index" + Arrays.toString(holding_roll));
-                    System.out.println("Now reroll dice");
                     current_roll = RerollWithHold(current_roll, holding_roll);
-                    System.out.println("After hold and reroll, new roll is : " + Arrays.toString(current_roll));
+                    System.out.println("After re-roll with hold, new roll is : " + Arrays.toString(current_roll));
                 }
 
                 System.out.println();
@@ -610,14 +614,13 @@ public class PirateGame implements Serializable {
                 if (rollState){
                     isGoing = false;
                     player.setScore(player.getScore());
-                    System.out.println("PLAYER DIE, END OF TURN");
                 }
 
                 //if its skull island
                 if (isSkullLand(current_roll)){ //if its skull island
                     isGoing = false;
                     numOfSkull = rerollSkullLandAndCountNOSkull(current_roll, player);
-                    System.out.println("Player has " + numOfSkull + " skulls in total");
+                    System.out.println("Player went to the skull island and collected  " + numOfSkull + " skulls in total");
                     break; // return # of skull in negative number
                 }
 
@@ -627,7 +630,6 @@ public class PirateGame implements Serializable {
                 if (checkIfDie(current_roll, player)){
                     isGoing = false;
                     player.setScore(player.getScore());
-                    System.out.println("PLAYER DIE, END OF TURN");
                 }
 
                 //checking sea battle
@@ -654,19 +656,17 @@ public class PirateGame implements Serializable {
                 //putting selected dice into chest
                 System.out.println("Player want to put these dice in chest" + Arrays.toString(diceToChest));
                 System.out.println("Putting selected dice into chest...");
-
                 player.setHoldingDie(diceToChest);
                 System.out.println("Player's chest now has : " + Arrays.toString(player.getHoldingDie()));
 
                 //player hold dice
                 System.out.println("Select the dice you want to hold, separate by one comma");
                 String[] input = scanner.nextLine().replaceAll("\\s", "").split(",");
-                System.out.println("Player want to hold these dice (did not put into chest) : ");
+                System.out.println("Player want to hold these dice (but did not put into chest) : ");
                 System.out.println(input);
 
                 //re-roll
                 current_roll = RerollWithChestHold(current_roll, input, diceToChest);
-
                 System.out.println("After hold and re-roll, new roll is : " );
                 System.out.println();
                 System.out.println("Player current info showing below: ");
@@ -677,7 +677,6 @@ public class PirateGame implements Serializable {
                 //check is dead
                 if (rollState){
                     isGoing = false;
-                    System.out.println("PLAYER DIE, END OF TURN");
                     scoreChest(player, current_roll);
                 }
             }
@@ -691,10 +690,6 @@ public class PirateGame implements Serializable {
             return player.getScore();
         }
     }
-
-
-
-
 
     public void connectToClient(){
         clientConnection = new Client();
