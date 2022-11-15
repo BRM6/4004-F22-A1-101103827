@@ -10,6 +10,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -617,5 +618,86 @@ public class miscellaneousFCAndFullChestBonusCases {
         int final_score = game.scoreForKindsAndChest(game.player.getCurrentRoll(), game.player) + game.scoreForDC(game.player.getCurrentRoll(), game.player);
         game.player.setScore(final_score);
         assertEquals(arg0, game.player.getScore());
+    }
+
+    //row 107
+    @When("Player gets one skull as FC for player get score")
+    public void playerGetsOneSkullAsFCForPlayerGetScore() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("1 skull");
+    }
+
+    @And("Player roll dice and get two skull six sword")
+    public void playerRollDiceAndGetTwoSkullSixSword() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<2){
+                current[i] = "skull";
+            }
+            if (i>=2 && i<8){
+                current[i] = "sword";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    //row 108
+    @And("Player roll dice and get two skull three parrots three monkey")
+    public void playerRollDiceAndGetTwoSkullThreeParrotsThreeMonkey() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<2){
+                current[i] = "skull";
+            }
+            if (i>=2 && i<5){
+                current[i] = "parrots";
+            }
+            if (i>=5 && i<8){
+                current[i] = "monkey";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player enter {int} to reroll skull for skull island")
+    public void playerEnterToRerollSkullForSkullIsland(int arg0) {
+        scannerInput(Integer.toString(arg0));
+        game = new PirateGame();
+        game.setNewPlayer(player);
+    }
+
+    @And("Player reroll three parrots and get two skull one sword")
+    public void playerRerollThreeParrotsAndGetTwoSkullOneSword() {
+        String[] hold = {"0", "1", "5", "6", "7"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[2] = "skull";
+        newCurrent[3] = "skull";
+        newCurrent[4] = "sword";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @And("Player reroll sword and three monkey and get three skulls one sword")
+    public void playerRerollSwordAndThreeMonkeyAndGetThreeSkullsOneSword() {
+        String[] hold = new String[]{"0", "1", "2", "3"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[4] = "skull";
+        newCurrent[5] = "skull";
+        newCurrent[6] = "skull";
+        newCurrent[7] = "sword";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @Then("Player score {int} to other players")
+    public void playerScoreToOtherPlayers(int arg0) {
+        int final_num_skull = game.rerollSkullLandAndCountNOSkull(game.player.getCurrentRoll(), game.player);
+        int final_deduct = final_num_skull * 100;
+        assertEquals(-900, final_deduct);
+        Assertions.assertEquals(0, game.player.getScore());
     }
 }

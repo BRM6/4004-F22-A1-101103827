@@ -125,3 +125,21 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player roll dice and get one skull seven sword
     Then Player score 0 for skull island
     And Player finished the round for miscellaneous
+
+  @Row107
+  Scenario: roll 2 skulls and 6 swords with FC with 1 skull  => die
+    When Player gets one skull as FC for player get score
+    And Player roll dice and get two skull six sword
+    Then Player score 0 for skull island
+    And Player finished the round for miscellaneous
+
+  @Row108
+  Scenario: skull island scenario three
+    When Player gets two skull as FC for player get score
+    And Player roll dice and get two skull three parrots three monkey
+    And Player enter 1 to reroll skull for skull island
+    And Player reroll three parrots and get two skull one sword
+    And Player reroll sword and three monkey and get three skulls one sword
+    Then Player score -900 to other players
+    And Player finished the round for miscellaneous
+    
