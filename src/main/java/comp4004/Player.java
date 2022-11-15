@@ -15,6 +15,7 @@ public class Player implements Serializable {
 
     private String[] currentRoll = new String[8];
     private boolean isLastRound = false;
+    private String[] chestIndex;
 
 
     //player constructor
@@ -25,6 +26,10 @@ public class Player implements Serializable {
         fortuneCard = "";
     }
 
+    public String[] getChestIndex(){return chestIndex;}
+    public void setChestIndex(String[] chest){
+        this.chestIndex = chest;
+    }
 
     public String[] getCurrentRoll() {
         return currentRoll;

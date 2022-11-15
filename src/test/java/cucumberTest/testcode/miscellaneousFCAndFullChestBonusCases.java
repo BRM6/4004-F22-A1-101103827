@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public class miscellaneousFCAndFullChestBonusCases {
     private ByteArrayOutputStream testOut;
@@ -154,11 +155,12 @@ public class miscellaneousFCAndFullChestBonusCases {
 
     @And("Player reroll two sword and get two parrots")
     public void playerRerollTwoSwordAndGetTwoParrots() {
-        String[] hold = new String[] {"0", "3", "4", "5"};
+        String[] hold = new String[] {"0","1", "2", "3", "4", "5"};
         String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
         newCurrent[6] = "parrots";
         newCurrent[7] = "parrots";
         game.player.setCurrentRoll(newCurrent);
+//        System.out.println(Arrays.toString(game.player.getCurrentRoll()));
     }
 
     //row 79
@@ -286,4 +288,73 @@ public class miscellaneousFCAndFullChestBonusCases {
         game.player.setCurrentRoll(die);
     }
 
+    //row 87
+    @When("Player gets treasure chest as FC for player get score")
+    public void playerGetsTreasureChestAsFCForPlayerGetScore() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("treasure chest");
+    }
+
+    @And("Player roll dice and get three parrots two sword two diamond one coin")
+    public void playerRollDiceAndGetThreeParrotsTwoSwordTwoDiamondOneCoin() {
+        String[] die = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<3){
+                die[i] = "parrots";
+            }
+            if (i>=3 && i<5){
+                die[i] = "sword";
+            }
+            if (i>=5 && i<7){
+                die[i] = "diamond";
+            }
+            if (i>=7 && i<8){
+                die[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(die);
+    }
+
+    @And("Player put two diamonds one coin in chest")
+    public void playerPutTwoDiamondsOneCoinInChest() {
+        String[] chestIndex;
+        chestIndex = new String[]{"5", "6", "7"};
+        game.player.setChestIndex(chestIndex);
+    }
+
+    @And("Player reroll with chest hold two sword and get two parrots")
+    public void playerRerollWithChestHoldTwoSwordAndGetTwoParrots() {
+        String[] hold = {"0", "1", "2"}; //select dice to hold
+        String[] die = game.RerollWithChestHold(game.player.getCurrentRoll(), hold, game.player.getChestIndex());
+        die[3] = "parrots";
+        die[4] = "parrots";
+        game.player.setCurrentRoll(die);
+    }
+
+    @And("Player put five parrots in chest take out two diamond and coin")
+    public void playerPutFiveParrotsInChestTakeOutTwoDiamondAndCoin() {
+        String[] chestIndex;
+        chestIndex = new String[]{"0", "1", "2", "3", "4"};
+        game.player.setChestIndex(chestIndex);
+    }
+
+    @And("Player roll dice and get one skull one coin one parrot")
+    public void playerRollDiceAndGetOneSkullOneCoinOneParrot() {
+        String[] hold = new String[]{}; //select dice to hold
+        String[] die = game.RerollWithChestHold(game.player.getCurrentRoll(), hold, game.player.getChestIndex()); //reroll
+        die[5] = "skull";
+        die[6] = "coin";
+        die[7] = "parrots";
+        game.player.setCurrentRoll(die);
+    }
+
+    @Then("Player score {int} with treasure chest card")
+    public void playerScoreWithTreasureChestCard(int arg0) {
+        int final_score = game.scoreForKindsAndChest(game.player.getCurrentRoll(), game.player) + game.scoreForDC(game.player.getCurrentRoll(), game.player);
+        player.setScore(final_score);
+        assertEquals(arg0, game.player.getScore());
+    }
 }
