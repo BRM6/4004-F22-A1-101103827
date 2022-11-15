@@ -70,3 +70,14 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player roll dice and get one skull one coin one parrot
     Then Player score 1100 with treasure chest card
     And Player finished the round for miscellaneous
+
+  @Row92
+  Scenario: Treasure chest test cases 2 player die
+    When Player gets treasure chest as FC for player get score
+    And Player roll dice and get two skull three parrots three coin
+    And Player put three coin in chest
+    And Player reroll with chest hold three parrots and get two diamond one coin
+    And Player put one coin in chest
+    And Player reroll with chest hold two diamond and get one skull one coin
+    Then Player score 600 with treasure chest card just the chest
+    And Player finished the round for miscellaneous

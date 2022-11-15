@@ -357,4 +357,64 @@ public class miscellaneousFCAndFullChestBonusCases {
         player.setScore(final_score);
         assertEquals(arg0, game.player.getScore());
     }
+
+    //row 92
+    @And("Player roll dice and get two skull three parrots three coin")
+    public void playerRollDiceAndGetTwoSkullThreeParrotsThreeCoin() {
+        String[] die = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            die[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dies
+            if (i<2){
+                die[i] = "skull";
+            }
+            if (i>=2 && i<5){
+                die[i] = "parrots";
+            }
+            if (i>=5 && i<8){
+                die[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(die);
+    }
+
+    @And("Player put three coin in chest")
+    public void playerPutThreeCoinInChest() {
+        String[] chestIndex = new String[]{"5", "6", "7"};
+        game.player.setChestIndex(chestIndex);
+    }
+
+    @And("Player reroll with chest hold three parrots and get two diamond one coin")
+    public void playerRerollWithChestHoldThreeParrotsAndGetTwoDiamondOneCoin() {
+        String[] hold = {"0", "1"}; //select dice to hold
+        String[] die = game.RerollWithChestHold(game.player.getCurrentRoll(), hold, game.player.getChestIndex());
+        die[2] = "diamond";
+        die[3] = "diamond";
+        die[4] = "coin";
+        game.player.setCurrentRoll(die);
+    }
+
+    @And("Player put one coin in chest")
+    public void playerPutOneCoinInChest() {
+        String[] chestIndex = new String[]{"4", "5", "6", "7"};
+        game.player.setChestIndex(chestIndex);
+    }
+
+    @And("Player reroll with chest hold two diamond and get one skull one coin")
+    public void playerRerollWithChestHoldTwoDiamondAndGetOneSkullOneCoin() {
+        String[] hold = new String[]{"0", "1"}; //select dice to hold
+        String[] die = game.RerollWithChestHold(game.player.getCurrentRoll(), hold, game.player.getChestIndex()); //reroll
+        die[2] = "skull";
+        die[3] = "coin";
+        game.player.setCurrentRoll(die);
+        game.player.setHoldingDie(game.player.getChestIndex());
+    }
+
+    @Then("Player score {int} with treasure chest card just the chest")
+    public void playerScoreWithTreasureChestCardJustTheChest(int arg0) {
+        game.scoreChest(game.player, game.player.getCurrentRoll());
+        int final_score = game.player.getScore();
+        assertEquals(600, final_score);
+    }
 }
