@@ -33,7 +33,17 @@ public class playerDieCases {
     //row 45
     @When("Player roll dice and get three skulls and five swords")
     public void playerRollDiceAndGetSkullsAndFiveSwords() {
-        String[] current = {"skull", "skull", "skull", "sword", "sword", "sword", "sword", "sword"};
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<3){
+                current[i] = "skull";
+            }else {
+                current[i] = "sword";
+            }
+        }
         game.player.setCurrentRoll(current);
     }
 

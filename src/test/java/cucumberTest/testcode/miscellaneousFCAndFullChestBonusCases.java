@@ -734,4 +734,40 @@ public class miscellaneousFCAndFullChestBonusCases {
         newCurrent[7] = "coin";
         game.player.setCurrentRoll(newCurrent);
     }
+
+    //row 111
+    @And("Player roll dice and get three skulls and five swords for skull island")
+    public void playerRollDiceAndGetThreeSkullsAndFiveSwordsForSkullIsland() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<3){
+                current[i] = "skull";
+            }else {
+                current[i] = "sword";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+    @And("Player reroll five sword get five coin")
+    public void playerRerollFiveSwordGetFiveCoin() {
+        String[] hold = new String[]{"0", "1", "2", "3", "4"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[3] = "coin";
+        newCurrent[4] = "coin";
+        newCurrent[5] = "coin";
+        newCurrent[6] = "coin";
+        newCurrent[7] = "coin";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @Then("Player score {int} to other players for skull island")
+    public void playerScoreToOtherPlayersForSkullIsland(int arg0) {
+        int final_num_skull = game.rerollSkullLandAndCountNOSkull(game.player.getCurrentRoll(), game.player);
+        int final_deduct = -5 * 100;
+        assertEquals(arg0, final_deduct);
+        Assertions.assertEquals(0, game.player.getScore());
+    }
 }
