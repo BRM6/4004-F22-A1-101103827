@@ -697,7 +697,41 @@ public class miscellaneousFCAndFullChestBonusCases {
     public void playerScoreToOtherPlayers(int arg0) {
         int final_num_skull = game.rerollSkullLandAndCountNOSkull(game.player.getCurrentRoll(), game.player);
         int final_deduct = final_num_skull * 100;
-        assertEquals(-900, final_deduct);
+        assertEquals(arg0, final_deduct);
         Assertions.assertEquals(0, game.player.getScore());
+    }
+
+    //row 110
+    @When("Player gets captain as FC for player get score with skull island")
+    public void playerGetsCaptainAsFCForPlayerGetScoreWithSkullIsland() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("captain");
+    }
+
+    @And("Player roll dice and get five skull three monkey")
+    public void playerRollDiceAndGetFiveSkullThreeMonkey() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<5){
+                current[i] = "skull";
+            }
+            if (i>=5 && i<8){
+                current[i] = "monkey";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player reroll three monkey get two skull one coin")
+    public void playerRerollThreeMonkeyGetTwoSkullOneCoin() {
+        String[] hold = new String[]{"0", "1", "2", "3", "4"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[5] = "skull";
+        newCurrent[6] = "skull";
+        newCurrent[7] = "coin";
+        game.player.setCurrentRoll(newCurrent);
     }
 }

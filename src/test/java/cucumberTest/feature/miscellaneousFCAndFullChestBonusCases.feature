@@ -142,4 +142,12 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player reroll sword and three monkey and get three skulls one sword
     Then Player score -900 to other players
     And Player finished the round for miscellaneous
-    
+
+  @Row110
+  Scenario: roll 5 skulls, 3 monkeys with FC Captain, reroll 3 monkeys, get 2 skulls, 1 coin, stop => -1400 for other players
+    When Player gets captain as FC for player get score with skull island
+    And Player roll dice and get five skull three monkey
+    And Player enter 1 to reroll skull for skull island
+    And Player reroll three monkey get two skull one coin
+    Then Player score -1400 to other players
+    And Player finished the round for miscellaneous
