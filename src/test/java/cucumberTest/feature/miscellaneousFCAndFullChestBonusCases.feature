@@ -81,3 +81,18 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player reroll with chest hold two diamond and get one skull one coin
     Then Player score 600 with treasure chest card just the chest
     And Player finished the round for miscellaneous
+
+# full chest
+  @Row97
+  Scenario: 3 monkeys, 3 swords, 1 diamond, 1 parrot FC: coin   => SC 400  (ie no bonus)
+    When Player gets coin as FC for player get score with full chest
+    And Player roll dice and get three monkey three sword one diamond one parrot
+    Then Player score 400 with full chest
+    And Player finished the round for miscellaneous
+
+  @Row98
+  Scenario: 3 monkeys, 3 swords, 2 coins FC: captain   => SC (100+100+200+500)*2 =  1800
+    When Player gets captain as FC for player get score with full chest
+    And Player roll dice and get three monkey three sword two coin
+    Then Player score 1800 with full chest with captain
+    And Player finished the round for miscellaneous

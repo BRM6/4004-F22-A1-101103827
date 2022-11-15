@@ -417,4 +417,76 @@ public class miscellaneousFCAndFullChestBonusCases {
         int final_score = game.player.getScore();
         assertEquals(600, final_score);
     }
+
+    //row 97
+    @When("Player gets coin as FC for player get score with full chest")
+    public void playerGetsCoinAsFCForPlayerGetScoreWithFullChest() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("coin");
+    }
+
+    @And("Player roll dice and get three monkey three sword one diamond one parrot")
+    public void playerRollDiceAndGetThreeMonkeyThreeSwordOneDiamondOneParrot() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<3){
+                current[i] = "monkey";
+            }
+            if (i>=3 && i<6){
+                current[i] = "sword";
+            }
+            if (i == 6){
+                current[i] = "diamond";
+            }
+            if (i == 7){
+                current[i] = "parrot";
+            }
+        }
+        game.player.setCurrentRoll(current);
+
+    }
+
+    @Then("Player score {int} with full chest")
+    public void playerScoreWithFullChest(int arg0) {
+        int final_score = game.scoreForKindsAndChest(game.player.getCurrentRoll(), game.player) + game.scoreForDC(game.player.getCurrentRoll(), game.player);
+        game.player.setScore(final_score);
+        assertEquals(arg0, game.player.getScore());
+    }
+
+    //row 98
+    @When("Player gets captain as FC for player get score with full chest")
+    public void playerGetsCaptainAsFCForPlayerGetScoreWithFullChest() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("captain");
+    }
+
+    @And("Player roll dice and get three monkey three sword two coin")
+    public void playerRollDiceAndGetThreeMonkeyThreeSwordTwoCoin() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<3){
+                current[i] = "monkey";
+            }
+            if (i>=3 && i<6){
+                current[i] = "sword";
+            }
+            if (i == 6 || i == 7){
+                current[i] = "coin";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @Then("Player score {int} with full chest with captain")
+    public void playerScoreWithFullChestWithCaptain(int arg0) {
+        game.calculateScoreForARoundWithCapMonkey(game.player, player.getCurrentRoll());
+        int final_score = player.getScore();
+        assertEquals(arg0, final_score);
+    }
 }
