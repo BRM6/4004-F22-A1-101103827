@@ -931,4 +931,25 @@ public class miscellaneousFCAndFullChestBonusCases {
         newCurrent[7] = "skull";
         game.player.setCurrentRoll(newCurrent);
     }
+
+    //row 120
+    @And("Player roll dice and get three monkey four sword one skull")
+    public void playerRollDiceAndGetThreeMonkeyFourSwordOneSkull() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 3) {
+                current[i] = "monkey";
+            }
+            if (i >= 3 && i < 7) {
+                current[i] = "sword";
+            }
+            if (i >= 7 && i < 8) {
+                current[i] = "skull";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
 }
