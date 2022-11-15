@@ -118,3 +118,10 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player roll dice and get two monkey one parrot two coin three diamond
     Then Player score 1200 with full chest with monkey
     And Player finished the round for miscellaneous
+
+  @Row106
+  Scenario: roll one skull and 7 swords with FC with two skulls => die
+    When Player gets two skull as FC for player get score
+    And Player roll dice and get one skull seven sword
+    Then Player score 0 for skull island
+    And Player finished the round for miscellaneous

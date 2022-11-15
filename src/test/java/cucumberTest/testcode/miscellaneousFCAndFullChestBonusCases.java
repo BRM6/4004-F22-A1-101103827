@@ -587,4 +587,35 @@ public class miscellaneousFCAndFullChestBonusCases {
         int final_score = game.player.getScore();
         assertEquals(arg0, final_score);
     }
+
+    //row 106
+    @When("Player gets two skull as FC for player get score")
+    public void playerGetsTwoSkullAsFCForPlayerGetScore() {
+        game.drawForturnCard(game.player);
+        game.player.setFortuneCard("2 skull");
+    }
+
+    @And("Player roll dice and get one skull seven sword")
+    public void playerRollDiceAndGetOneSkullSevenSword() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<1){
+                current[i] = "skull";
+            }
+            if (i>=1 && i<8){
+                current[i] = "sword";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @Then("Player score {int} for skull island")
+    public void playerScoreForSkullIsland(int arg0) {
+        int final_score = game.scoreForKindsAndChest(game.player.getCurrentRoll(), game.player) + game.scoreForDC(game.player.getCurrentRoll(), game.player);
+        game.player.setScore(final_score);
+        assertEquals(arg0, game.player.getScore());
+    }
 }
