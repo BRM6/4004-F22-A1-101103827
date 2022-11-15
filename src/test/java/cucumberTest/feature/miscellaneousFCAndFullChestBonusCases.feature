@@ -111,3 +111,10 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player reroll two parrots and get one coin and one sword
     Then Player score 1200 with sea battle with full chest
     And Player finished the round for miscellaneous
+
+  @Row103
+  Scenario: FC: monkey business and roll 2 monkeys, 1 parrot, 2 coins, 3 diamonds   SC 1200
+    When Player gets monkey business as FC for player get score
+    And Player roll dice and get two monkey one parrot two coin three diamond
+    Then Player score 1200 with full chest with monkey
+    And Player finished the round for miscellaneous
