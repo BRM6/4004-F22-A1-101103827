@@ -120,6 +120,47 @@ public class miscellaneousFCAndFullChestBonusCases {
         assertFalse(game.isGoing);
     }
 
+    //row 78
+    @And("Player roll dice and get three skull three parrots two sword")
+    public void playerRollDiceAndGetThreeSkullThreeParrotsTwoSword() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<3){
+                current[i] = "skull";
+            }
+            if (i>=3 && i<6){
+                current[i] = "parrots";
+            }
+            if (i>=6 && i<8){
+                current[i] = "sword";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player press {int} and reroll one skull and get parrot")
+    public void playerPressAndRerollOneSkullAndGetParrot(int arg0) {
+        //simulate user input
+        scannerInput(Integer.toString(arg0));
+        game = new PirateGame();
+        game.setNewPlayer(player);
+        String[] newCurrent = game.useSorceress(game.player.getCurrentRoll(), game.player);
+        newCurrent[0] = "parrots";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @And("Player reroll two sword and get two parrots")
+    public void playerRerollTwoSwordAndGetTwoParrots() {
+        String[] hold = new String[] {"0", "3", "4", "5"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[6] = "parrots";
+        newCurrent[7] = "parrots";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
     //row 82
     @When("Player gets monkey business as FC for player get score")
     public void playerGetsMonkeyBusinessAsFCForPlayerGetScore() {
@@ -213,4 +254,5 @@ public class miscellaneousFCAndFullChestBonusCases {
         }
         game.player.setCurrentRoll(die);
     }
+
 }
