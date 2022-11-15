@@ -14,8 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class multiplayerCases {
     private ByteArrayOutputStream testOut;
@@ -226,8 +225,9 @@ public class multiplayerCases {
     @And("Player three roll dice and six skull two parrots press {int} get {int} score make {int} deduction to other players")
     public void playerThreeRollDiceAndSixSkullTwoParrotsPressGetScoreMakeDeductionToOtherPlayers(int arg0, int arg1, int arg2) {
         scannerInput(Integer.toString(arg0));
+        Player p3 = game3.player;
         game3 = new PirateGame();
-        game3.setNewPlayer(player);
+        game3.setNewPlayer(p3);
         String[] current3 = new String[8];
         for (int i=0; i<8; i++){               //roll die
             current3[i] = game3.rollSingleDie();
@@ -417,4 +417,99 @@ public class multiplayerCases {
         Assertions.assertEquals(arg0, game1.player.getScore());
         game1.player.setCurrentRoll(current1);
     }
+
+    //row 147
+    @And("Player one roll dice and get six sword two skull get {int} score")
+    public void playerOneRollDiceAndGetSixSwordTwoSkullGetScore(int arg0) {
+        String[] current1 = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current1[i] = game1.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 6) {
+                current1[i] = "sword";
+            }
+            if (i >= 6 && i < 8) {
+                current1[i] = "skull";
+            }
+        }
+        int score = game1.scoreForKindsAndChest(current1, game1.player) + game1.scoreForDC(current1, game1.player);
+        Assertions.assertEquals(arg0, score);
+        game1.player.setScore(game1.player.getScore() + (game1.scoreForKindsAndChest(current1, game1.player) + game1.scoreForDC(current1, game1.player)) );
+        game1.player.setCurrentRoll(current1);
+    }
+
+    @And("Player two gets sorceress as FC for multiplayer")
+    public void playerTwoGetsSorceressAsFCForMultiplayer() {
+        game2.drawForturnCard(player);
+        game2.player.setFortuneCard("sorceress");
+    }
+
+    @And("Player two roll dice and get seven skull one coin")
+    public void playerTwoRollDiceAndGetSevenSkullOneCoin() {
+        String[] current2 = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current2[i] = game2.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 7) {
+                current2[i] = "skull";
+            }
+            if (i >= 7 && i < 8) {
+                current2[i] = "coin";
+            }
+        }
+        game2.player.setCurrentRoll(current2);
+    }
+
+    @And("Player two press {int} to use sorceress")
+    public void playerTwoPressToUseSorceress(int arg0) {
+        scannerInput(Integer.toString(arg0));
+        Player p2 = game2.player;
+        game2 = new PirateGame();
+        game2.setNewPlayer(p2);
+        String[] afterSorceress = game2.useSorceress(game2.player.getCurrentRoll(), game2.player);
+        assertNotEquals("sorceress", game2.player.getFortuneCard());
+        game2.player.setCurrentRoll(afterSorceress);
+    }
+
+    @And("Player two press {int} to reroll in skull island")
+    public void playerTwoPressToRerollInSkullIsland(int arg0) {
+        scannerInput(Integer.toString(arg0));
+        Player p2 = game2.player;
+        game2 = new PirateGame();
+        game2.setNewPlayer(p2);
+    }
+
+    @And("Player two reroll coin and parrot and get two skull get {int} score make {int} deduction to other players")
+    public void playerTwoRerollCoinAndParrotAndGetTwoSkullGetScoreMakeDeductionToOtherPlayers(int arg0, int arg1) {
+        String[] hold = {"1", "2", "3", "4", "5", "6"}; //select dice to hold
+        String[] current2 = game2.RerollWithHold(game2.player.getCurrentRoll(), hold); //reroll
+        //assign dice
+        current2[0] = "skull";
+        current2[7] = "skull";
+        int player2NumOfSkull = game2.rerollSkullLandAndCountNOSkull(current2, game2.player);
+        int player2Deduct = player2NumOfSkull * 100;
+        assertEquals(arg0, game2.player.getScore());
+        assertEquals(arg1, player2Deduct);
+        game1.player.setScore(game1.player.getScore() + arg1);
+        game3.player.setScore(game3.player.getScore() + arg1);
+
+    }
+
+    @And("Player one current score is {int}")
+    public void playerOneCurrentScoreIs(int arg0) {
+        assertEquals(arg0, game1.player.getScore());
+    }
+
+    @And("Player two current score is {int}")
+    public void playerTwoCurrentScoreIs(int arg0) {
+        assertEquals(arg0, game2.player.getScore());
+    }
+
+    @And("Player three current score is {int}")
+    public void playerThreeCurrentScoreIs(int arg0) {
+        assertEquals(arg0, game3.player.getScore());
+    }
+
 }

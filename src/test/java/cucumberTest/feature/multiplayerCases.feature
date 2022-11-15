@@ -54,3 +54,18 @@ Feature: the following test cases are multiplayer test cases
     And Player one current score 9000
     Then Winner is "p1"
     And Players finished the round
+
+  @Row147
+  Scenario: multiplayer cases four
+    When Player one gets coin as FC for multiplayer
+    And Player one roll dice and get six sword two skull get 1100 score
+    And Player two gets sorceress as FC for multiplayer
+    And Player two roll dice and get seven skull one coin
+    And Player two press 1 to use sorceress
+    And Player two press 1 to reroll in skull island
+    And Player two reroll coin and parrot and get two skull get 0 score make -800 deduction to other players
+    And Player one current score is 300
+    And Player two current score is 0
+    And Player three current score is 0
+    Then Winner is "p1"
+    And Players finished the round
