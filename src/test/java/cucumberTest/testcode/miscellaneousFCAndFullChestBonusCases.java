@@ -898,4 +898,37 @@ public class miscellaneousFCAndFullChestBonusCases {
         int final_score = game.player.getScore();
         assertEquals(arg0, final_score);
     }
+
+    //row 118
+    @And("Player roll dice and get four monkey one sword one skull two parrots")
+    public void playerRollDiceAndGetFourMonkeyOneSwordOneSkullTwoParrots() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 4) {
+                current[i] = "monkey";
+            }
+            if (i >= 4 && i < 5) {
+                current[i] = "sword";
+            }
+            if (i >= 5 && i < 6) {
+                current[i] = "skull";
+            }
+            if (i >= 6 && i < 8) {
+                current[i] = "parrots";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player reroll two parrot and get one sword one skull")
+    public void playerRerollTwoParrotAndGetOneSwordOneSkull() {
+        String[] hold = new String[]{"0", "1", "2", "3", "4", "5"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[6] = "sword";
+        newCurrent[7] = "skull";
+        game.player.setCurrentRoll(newCurrent);
+    }
 }
