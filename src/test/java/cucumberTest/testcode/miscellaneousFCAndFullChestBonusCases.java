@@ -161,6 +161,37 @@ public class miscellaneousFCAndFullChestBonusCases {
         game.player.setCurrentRoll(newCurrent);
     }
 
+    //row 79
+    @And("Player roll dice and get one skull four parrots three monkey")
+    public void playerRollDiceAndGetOneSkullFourParrotsThreeMonkey() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i<1){
+                current[i] = "skull";
+            }
+            if (i>=1 && i<5){
+                current[i] = "parrots";
+            }
+            if (i>=5 && i<8){
+                current[i] = "monkey";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player reroll three monkey and get one skull two parrots")
+    public void playerRerollThreeMonkeyAndGetOneSkullTwoParrots() {
+        String[] hold = new String[] {"1", "2", "3", "4"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[5] = "skull";
+        newCurrent[6] = "parrots";
+        newCurrent[7] = "parrots";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
     //row 82
     @When("Player gets monkey business as FC for player get score")
     public void playerGetsMonkeyBusinessAsFCForPlayerGetScore() {

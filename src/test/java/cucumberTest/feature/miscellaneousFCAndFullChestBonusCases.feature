@@ -26,6 +26,16 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player card is not sorceress
     And Player finished the round for miscellaneous
 
+  @Row79
+  Scenario: roll 1 skull, 4 parrots, 3 monkeys, reroll 3 monkeys, get 1 skull, 2 parrots, reroll skull, get parrot, score (SC 2000)
+    When Player gets sorceress as FC for player get score
+    And Player roll dice and get one skull four parrots three monkey
+    And Player reroll three monkey and get one skull two parrots
+    And Player press 1 and reroll one skull and get parrot
+    Then Player score 2000 with sorceress card
+    And Player card is not sorceress
+    And Player finished the round for miscellaneous
+
 #  monkey business
   @Row82
   Scenario: roll 3 monkeys 3 parrots  1 skull 1 coin  SC = 1100  (i.e., sequence of of 6 + coin)
