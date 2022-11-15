@@ -220,3 +220,12 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player roll dice and get three monkey four sword one skull
     Then Player did not die and score 1300
     And Player finished the round for miscellaneous
+
+  @Row124
+  Scenario: Sea battle test cases last one
+    When Player gets four sword sea battle as FC for player get score with full chest
+    And Player roll dice and get three monkey one sword one skull one diamond two parrot
+    And Player reroll two parrot and get two sword
+    And Player reroll three monkey and get one sword two parrots
+    Then Player did not die and score 1300
+    And Player finished the round for miscellaneous

@@ -984,4 +984,50 @@ public class miscellaneousFCAndFullChestBonusCases {
         newCurrent[3] = "sword";
         game.player.setCurrentRoll(newCurrent);
     }
+
+    //row 124
+    @And("Player roll dice and get three monkey one sword one skull one diamond two parrot")
+    public void playerRollDiceAndGetThreeMonkeyOneSwordOneSkullOneDiamondTwoParrot() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 3) {
+                current[i] = "monkey";
+            }
+            if (i >= 3 && i < 4) {
+                current[i] = "sword";
+            }
+            if (i >= 4 && i < 5) {
+                current[i] = "skull";
+            }
+            if (i >= 5 && i < 6) {
+                current[i] = "diamond";
+            }
+            if (i >= 6 && i < 8) {
+                current[i] = "parrots";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+    @And("Player reroll two parrot and get two sword")
+    public void playerRerollTwoParrotAndGetTwoSword() {
+        String[] hold = new String[]{"0", "1", "2", "3", "4", "5"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[6] = "sword";
+        newCurrent[7] = "sword";
+        game.player.setCurrentRoll(newCurrent);
+    }
+
+    @And("Player reroll three monkey and get one sword two parrots")
+    public void playerRerollThreeMonkeyAndGetOneSwordTwoParrots() {
+        String[] hold = new String[]{"3", "4", "5", "6", "7"};
+        String[] newCurrent = game.RerollWithHold(game.player.getCurrentRoll(), hold);
+        newCurrent[0] = "sword";
+        newCurrent[1] = "parrots";
+        newCurrent[2] = "parrots";
+        game.player.setCurrentRoll(newCurrent);
+    }
 }
