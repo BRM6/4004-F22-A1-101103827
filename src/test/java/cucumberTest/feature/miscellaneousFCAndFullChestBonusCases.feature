@@ -213,3 +213,10 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player reroll four monkey and get two skull two sword
     Then Player die and score 0
     And Player finished the round for miscellaneous
+
+  @Row123
+  Scenario: FC 4 swords, roll 3 monkeys 4 swords 1 skull  SC = 100 +200 + 1000 = 1300
+    When Player gets four sword sea battle as FC for player get score with full chest
+    And Player roll dice and get three monkey four sword one skull
+    Then Player did not die and score 1300
+    And Player finished the round for miscellaneous
