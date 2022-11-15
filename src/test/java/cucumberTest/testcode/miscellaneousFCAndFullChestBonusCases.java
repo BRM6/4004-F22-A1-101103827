@@ -4,19 +4,43 @@ import comp4004.PirateGame;
 import comp4004.Player;
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.AfterEach;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 
 public class miscellaneousFCAndFullChestBonusCases {
+    private ByteArrayOutputStream testOut;
+    private final PrintStream systemOut = System.out;
+    private final InputStream systemIn = System.in;
+    private ByteArrayInputStream testIn;
     private PirateGame game;
     private Player player;
+
+    private void scannerInput(String data) {
+        testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+    }
+
+    @After
+    public void restoreSystemInputOutput() {
+        System.setIn(systemIn);
+        System.setOut(systemOut);
+    }
 
     //background
     @Given("Game has started for miscellaneous FC and Full Chest")
     public void gameHasStartedForMiscellaneousFCAndFullChest() {
         game = new PirateGame();
+        testOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(testOut));
     }
 
     @And("Player with name {string} is playing the game for miscellaneous FC and Full Chest")
@@ -71,6 +95,9 @@ public class miscellaneousFCAndFullChestBonusCases {
     @And("Player press {int} and reroll one skull and get monkey")
     public void playerPressAndRerollOneSkullAndGetMonkey(int arg0) {
         //simulate user input
+        scannerInput(Integer.toString(arg0));
+        game = new PirateGame();
+        game.setNewPlayer(player);
         String[] newCurrent = game.useSorceress(game.player.getCurrentRoll(), game.player);
         newCurrent[5] = "monkey";
         game.player.setCurrentRoll(newCurrent);
@@ -85,7 +112,7 @@ public class miscellaneousFCAndFullChestBonusCases {
 
     @And("Player card is not sorceress")
     public void playerCardIsNotSorceress() {
-        assertNotEquals("not sorceress", game.player.getFortuneCard());
+        assertNotEquals("sorceress", game.player.getFortuneCard());
     }
 
     @And("Player finished the round for miscellaneous")
