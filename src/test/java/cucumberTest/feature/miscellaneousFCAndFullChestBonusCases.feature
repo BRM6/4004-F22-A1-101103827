@@ -160,3 +160,12 @@ Feature: Player has a special fortune card and they will get a score value after
     And Player reroll five sword get five coin
     Then Player score -500 to other players for skull island
     And Player finished the round for miscellaneous
+
+# Sea battle
+  @Row114
+  Scenario: FC 2 swords, roll 4 monkeys, 3 skulls & 1 sword and die   => die and lose 300 points
+    When Player gets two sword sea battle as FC for player get score with full chest
+    And Player roll dice and get four monkey three skull one sword
+    Then Player die and score 0
+    And Player finished the round for miscellaneous
+    

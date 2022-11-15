@@ -770,4 +770,35 @@ public class miscellaneousFCAndFullChestBonusCases {
         assertEquals(arg0, final_deduct);
         Assertions.assertEquals(0, game.player.getScore());
     }
+
+    //row 114
+    @And("Player roll dice and get four monkey three skull one sword")
+    public void playerRollDiceAndGetFourMonkeyThreeSkullOneSword() {
+        String[] current = new String[8];
+        for (int i=0; i<8; i++){               //roll die
+            current[i] = game.rollSingleDie();
+        }
+        for (int i=0; i<8; i++){            //assign dice
+            if (i < 4) {
+                current[i] = "monkey";
+            }
+            if (i >= 4 && i < 7) {
+                current[i] = "skull";
+            }
+            if (i >= 7 && i < 8) {
+                current[i] = "sword";
+            }
+        }
+        game.player.setCurrentRoll(current);
+    }
+
+
+    @Then("Player die and score {int}")
+    public void playerDieAndScore(int arg0) {
+        boolean final_state = game.checkIfDie(game.player.getCurrentRoll(), game.player);
+        assertTrue(final_state);
+        game.seaBattle(game.player, game.player.getCurrentRoll());
+        int final_score = game.player.getScore();
+        assertEquals(arg0, final_score);
+    }
 }
