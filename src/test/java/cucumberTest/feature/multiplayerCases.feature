@@ -3,9 +3,9 @@ Feature: the following test cases are multiplayer test cases
 
   Background:
     Given Game has started for multiplayer
-    And Player one with name "DI" is playing the game for multiplayer
-    And Player two with name "MA" is playing the game for multiplayer
-    And Player three with name "Ben" is playing the game for multiplayer
+    And Player one with name "p1" is playing the game for multiplayer
+    And Player two with name "p2" is playing the game for multiplayer
+    And Player three with name "p3" is playing the game for multiplayer
 
   @Row130
   Scenario: multiplayer cases one
@@ -18,4 +18,5 @@ Feature: the following test cases are multiplayer test cases
     Then Player one score is 4000
     And Player two score is 2000
     And Player three score is 0
+    And Winner is "p1"
     And Players finished the round

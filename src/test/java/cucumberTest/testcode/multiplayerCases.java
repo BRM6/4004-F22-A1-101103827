@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class multiplayerCases {
@@ -129,6 +130,18 @@ public class multiplayerCases {
         int player3_final_score = game3.scoreForKindsAndChest(game3.player.getCurrentRoll(), game3.player) + game3.scoreForDC(game3.player.getCurrentRoll(), game3.player);
         game3.player.setScore(player3_final_score);
         Assertions.assertEquals(arg0, game3.player.getScore());
+    }
+
+    @And("Winner is {string}")
+    public void winnerIs(String arg0) {
+        Player[] player_list = new Player[3];
+        player_list[0] = game1.player;
+        player_list[1] = game2.player;
+        player_list[2] = game3.player;
+
+        Player winner = game1.getWinner(player_list);
+        String winner_name = winner.getName();
+        assertEquals(arg0, winner_name);
     }
 
     @And("Players finished the round")
